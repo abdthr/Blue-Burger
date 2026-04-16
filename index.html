@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blue Burger</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ========== NAVIGATION ========== -->
+  <header class="nav" id="nav">
+    <div class="nav__container">
+      <a href="#" class="nav__logo">
+        <img src="brand_assets/Blue Logo.png" alt="Blue." />
+      </a>
+      <nav class="nav__links">
+        <a href="#menu">Menu</a>
+        <a href="#pourquoi-nous">À Propos</a>
+        <a href="#adresse">Notre Adresse</a>
+      </nav>
+      <a href="tel:+32484109199" class="btn btn--orange nav__cta">Commander</a>
+      <button class="nav__burger" id="navBurger" aria-label="Ouvrir le menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="nav__mobile" id="navMobile">
+      <a href="#menu">Menu</a>
+      <a href="#pourquoi-nous">À Propos</a>
+      <a href="#adresse">Notre Adresse</a>
+      <a href="tel:+32484109199" class="btn btn--orange">Commander</a>
+    </div>
+  </header>
+
+  <!-- ========== HERO ========== -->
+  <section class="hero" id="accueil">
+    <div class="hero__bg">
+      <img src="brand_assets/Banner.png" alt="Blue. — nos spécialités" />
+      <div class="hero__overlay"></div>
+    </div>
+    <div class="hero__content">
+      <div class="hero__badge">Molenbeek-Saint-Jean · Ouvert tous les jours</div>
+      <h1 class="hero__headline">
+        Vrais Burgers.<br />
+        <span class="text--orange">Vraies</span> Saveurs.
+      </h1>
+      <p class="hero__sub">
+        Burgers généreux, poulet croustillant et accompagnements qui font la différence —
+        préparés à la commande, à chaque fois.
+      </p>
+      <div class="hero__actions">
+        <a href="tel:+32484109199" class="btn btn--orange btn--lg">Commander</a>
+        <a href="#menu" class="btn btn--outline btn--lg">Voir le Menu</a>
+      </div>
+    </div>
+    <div class="hero__scroll"><span></span></div>
+  </section>
+
+  <!-- ========== TICKER ========== -->
+  <div class="ticker">
+    <div class="ticker__track">
+      <span>Menu Blue</span>
+      <span class="ticker__dot">●</span>
+      <span>Tenders Croustillants</span>
+      <span class="ticker__dot">●</span>
+      <span>Menu Tower</span>
+      <span class="ticker__dot">●</span>
+      <span>Frites Gaufrettes</span>
+      <span class="ticker__dot">●</span>
+      <span>Bucket Duo</span>
+      <span class="ticker__dot">●</span>
+      <span>Menu Double Trouble</span>
+      <span class="ticker__dot">●</span>
+      <span>Mozza Stick</span>
+      <span class="ticker__dot">●</span>
+      <span>Menu Fermier</span>
+      <span class="ticker__dot">●</span>
+      <span>Tiramisu Spéculoos</span>
+      <span class="ticker__dot">●</span>
+      <span>Menu Blue</span>
+      <span class="ticker__dot">●</span>
+      <span>Tenders Croustillants</span>
+      <span class="ticker__dot">●</span>
+      <span>Menu Tower</span>
+      <span class="ticker__dot">●</span>
+      <span>Frites Gaufrettes</span>
+      <span class="ticker__dot">●</span>
+      <span>Bucket Duo</span>
+      <span class="ticker__dot">●</span>
+      <span>Menu Double Trouble</span>
+      <span class="ticker__dot">●</span>
+      <span>Mozza Stick</span>
+      <span class="ticker__dot">●</span>
+      <span>Menu Fermier</span>
+      <span class="ticker__dot">●</span>
+      <span>Tiramisu Spéculoos</span>
+      <span class="ticker__dot">●</span>
+    </div>
+  </div>
+
+  <!-- ========== POURQUOI BLUE ========== -->
+  <section class="why-us section" id="pourquoi-nous">
+    <div class="container">
+      <div class="section__header">
+        <span class="section__label">Pourquoi Blue. ?</span>
+        <h2 class="section__title">On ne fait pas les<br />choses à moitié.</h2>
+      </div>
+      <div class="why-us__grid">
+        <div class="why-card">
+          <div class="why-card__icon">🔥</div>
+          <h3>Préparé à la commande</h3>
+          <p>Chaque burger, chaque basket — cuisiné au moment de votre commande. Pas de lampe chauffante, pas de compromis.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-card__icon">🍗</div>
+          <h3>Poulet Premium</h3>
+          <p>Tenders panés à la main avec un croustillant qu'on entend à la dégustation. Croquant dehors, fondant dedans — à chaque fois.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-card__icon">🌶️</div>
+          <h3>Sauces Maison</h3>
+          <p>De notre sauce Blue signature au cheddar fondant — nos sauces maison, c'est ce qui vous fait revenir.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-card__icon">⚡</div>
+          <h3>Rapide &amp; Frais</h3>
+          <p>Service rapide sans sacrifier la qualité. Dégusté en quelques minutes, satisfait à chaque fois.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== MENU ========== -->
+  <section class="menu section section--dark" id="menu">
+    <div class="container">
+      <div class="section__header">
+        <span class="section__label section__label--light">La Carte</span>
+        <h2 class="section__title section__title--light">Notre Menu</h2>
+        <p class="section__sub">Tous les menus incluent frites gaufrettes + boisson au choix.</p>
+      </div>
+
+      <div class="menu__tabs-wrap">
+        <div class="menu__tabs">
+          <button class="menu__tab active" data-cat="all">Tous</button>
+          <button class="menu__tab" data-cat="menus-burgers">Menus Burgers</button>
+          <button class="menu__tab" data-cat="menus-sandwichs">Menus Sandwichs</button>
+          <button class="menu__tab" data-cat="poulet">Poulet</button>
+          <button class="menu__tab" data-cat="accompagnements">Accompagnements</button>
+          <button class="menu__tab" data-cat="boissons">Boissons</button>
+          <button class="menu__tab" data-cat="desserts">Desserts</button>
+        </div>
+      </div>
+
+      <div class="menu__grid" id="menuGrid">
+
+        <!-- ── MENUS BURGERS ── -->
+        <div class="menu-card" data-cat="menus-burgers">
+          <div class="menu-card__img">
+            <img src="brand_assets/Menu/Menu Classic.jpeg" alt="Menu Classic" />
+            <span class="menu-card__cat">Menu Burger</span>
+          </div>
+          <div class="menu-card__body">
+            <h3>Menu Classic</h3>
+            <p>Steak haché, cheddar, salade, tomate, cornichons, sauce maison + Frites + Boisson</p>
+            <div class="menu-card__footer">
+              <span class="menu-card__price">€13.00</span>
+              <a href="tel:+32484109199" class="btn btn--orange btn--sm">Ajouter</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card" data-cat="menus-burgers">
+          <div class="menu-card__img">
+            <img src="brand_assets/Menu/Menu Fish.jpeg" alt="Menu Fish" />
+            <span class="menu-card__cat">Menu Burger</span>
+          </div>
+          <div class="menu-card__body">
+            <h3>Menu Fish</h3>
+            <p>Filet de poisson pané, sauce tartare, salade, tomate + Frites + Boisson</p>
+            <div class="menu-card__footer">
+              <span class="menu-card__price">€12.00</span>
+              <a href="tel:+32484109199" class="btn btn--orange btn--sm">Ajouter</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card" data-cat="menus-burgers">
+          <div class="menu-card__img">
+            <img src="brand_assets/Menu/Menu Blue.jpeg" alt="Menu Blue" />
+            <span class="menu-card__cat menu-card__cat--star">⭐ Signature</span>
+          </div>
+          <div class="menu-card__body">
+            <h3>Menu Blue</h3>
+            <p>Double steak haché, cheddar, bacon croustillant, salade, sauce Blue maison + Frites + Boisson</p>
+            <div class="menu-card__footer">
+              <span class="menu-card__price">€14.90</span>
+              <a href="tel:+32484109199" class="btn btn--orange btn--sm">Ajouter</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card" data-cat="menus-burgers">
+          <div class="menu-card__img">
+            <img src="brand_assets/Menu/Menu Chicken Crunch.jpeg" alt="Menu Chicken Crunch" />
+            <span class="menu-card__cat">Menu Burger</span>
+          </div>
+          <div class="menu-card__body">
+            <h3>Menu Chicken Crunch</h3>
+            <p>Filet de poulet extra croustillant, cheddar fondant, salade croquante, sauce maison + Frites + Boisson</p>
+            <div class="menu-card__footer">
+              <span class="menu-card__price">€14.90</span>
+              <a href="tel:+32484109199" class="btn btn--orange btn--sm">Ajouter</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card" data-cat="menus-burgers">
+          <div class="menu-card__img">
+            <img src="brand_assets/Menu/Menu Radical.jpeg" alt="Menu Radical" />
+            <span class="menu-card__cat">Menu Burger</span>
+          </div>
+          <div class="menu-card__body">
+            <h3>Menu Radical</h3>
+            <p>Double steak, double cheddar, sauce piquante maison, cornichons, oignons + Frites + Boisson</p>
+            <div class="menu-card__footer">
+              <span class="menu-card__price">€15.00</span>
+              <a href="tel:+32484109199" class="btn btn--orange btn--sm">Ajouter</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card" data-cat="menus-burgers">
+          <div class="menu-card__img">
+            <img src="brand_assets/Menu/Menu Double Trouble.jpeg" alt="Menu Double Trouble" />
+            <span class="menu-card__cat">Menu Burger</span>
+          </div>
+          <div class="menu-card__body">
+            <h3>Menu Double Trouble</h3>
+            <p>Double steak haché, double cheddar, bacon fumé, salade, tomate + Frites + Boisson</p>
+            <div class="menu-card__footer">
+              <span class="menu-card__price">€15.50</span>
+              <a href="tel:+32484109199" class="btn btn--orange btn--sm">Ajouter</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card" data-cat="menus-burgers">
+          <div class="menu-card__img">
+            <img src="brand_assets/Menu/Menu Fermier.jpeg" alt="Menu Fermier" />
+            <span class="menu-card__cat">Menu Burger</span>
+          </div>
+          <div class="menu-card__body">
+            <h3>Menu Fermier</h3>
+            <p>Poulet fermier croustillant, bacon fumé, cheddar, salade verte, sauce maison + Frites + Boisson</p>
+            <div class="menu-card__footer">
+              <span class="menu-card__price">€16.50</span>
+              <a href="tel:+32484109199" class="btn btn--orange btn--sm">Ajouter</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card" data-cat="menus-burgers">
+          <div class="menu-card__img">
+            <img src="brand_assets/Menu/Menu Tower.jpeg" alt="Menu Tower" />
+            <span class="menu-card__cat menu-card__cat--star">⭐ Best-seller</span>
+          </div>
+          <div class="menu-card__body">
+            <h3>Menu Tower</h3>
+            <p>Triple steak haché, triple cheddar, bacon, oignons caramélisés, salade + Frites + Boisson</p>
+            <div class="menu-card__footer">
+              <span class="menu-card__price">€16.50</span>
+              <a href="tel:+32484109199" class="btn btn--orange btn--sm">Ajouter</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card" data-cat="menus-sandwichs">
+          <div class="menu-card__img">
+            <img src="brand_assets/Menu/Menu Univers-6T.jpeg" alt="Menu Univers-6T" />
+            <span class="menu-card__cat">Menu Sandwich</span>
+          </div>
+          <div class="menu-card__body">
+            <h3>Menu Univers-6T</h3>
+            <p>Sandwich signature accompagné de 6 tenders croustillants maison, sauce au choix + Frites + Boisson</p>
+            <div class="menu-card__footer">
+              <span class="menu-card__price">€13.50</span>
+              <a href="tel:+32484109199" class="btn btn--orange btn--sm">Ajouter</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card" data-cat="poulet">
+          <div class="menu-card__img">
+            <img src="brand_assets/Menu/Menu Poutine.JPEG" alt="Menu Poutine" />
+            <span class="menu-card__cat menu-card__cat--new">Nouveau</span>
+          </div>
+          <div class="menu-card__body">
+            <h3>Menu Poutine</h3>
+            <p>Frites gaufrettes, sauce poutine maison, fromage fondant, toppings croustillants + Boisson</p>
+            <div class="menu-card__footer">
+              <span class="menu-card__price">€15.00</span>
+              <a href="tel:+32484109199" class="btn btn--orange btn--sm">Ajouter</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── MENUS SANDWICHS ── -->
+        <div class="menu-card" data-cat="menus-sandwichs">
+          <div class="menu-card__img">
+            <img src="brand_assets/Menu/Menu Ashoue.jpeg" alt="Menu Ashoue" />
+            <span class="menu-card__cat">Menu Sandwich</span>
+          </div>
+          <div class="menu-card__body">
+            <h3>Menu Ashoue</h3>
+            <p>Pain plat croustillant, viande hachée épicée, cheddar fondu, sauce maison + Frites + Boisson</p>
+            <div class="menu-card__footer">
+              <span class="menu-card__price">€13.00</span>
+              <a href="tel:+32484109199" class="btn btn--orange btn--sm">Ajouter</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card" data-cat="menus-sandwichs">
+          <div class="menu-card__img">
+            <img src="brand_assets/Menu/Menu Escalope.jpeg" alt="Menu Escalope" />
+            <span class="menu-card__cat">Menu Sandwich</span>
+          </div>
+          <div class="menu-card__body">
+            <h3>Menu Escalope</h3>
+            <p>Pain plat, escalope de poulet grillée, cheddar fondant, salade, sauce blanche + Frites + Boisson</p>
+            <div class="menu-card__footer">
+              <span class="menu-card__price">€13.00</span>
+              <a href="tel:+32484109199" class="btn btn--orange btn--sm">Ajouter</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card" data-cat="menus-sandwichs">
+          <div class="menu-card__img">
+            <img src="brand_assets/Menu/Menu Steak.jpeg" alt="Menu Steak" />
+            <span class="menu-card__cat">Menu Sandwich</span>
+          </div>
+          <div class="menu-card__body">
+            <h3>Menu Steak</h3>
+            <p>Pain plat, steak haché juteux, cheddar fondant, oignons, sauce maison + Frites + Boisson</p>
+            <div class="menu-card__footer">
+              <span class="menu-card__price">€13.00</span>
+              <a href="tel:+32484109199" class="btn btn--orange btn--sm">Ajouter</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card" data-cat="menus-sandwichs">
+          <div class="menu-card__img">
+            <img src="brand_assets/Menu/Menu Tandoori.jpeg" alt="Menu Tandoori" />
+            <span class="menu-card__cat">Menu Sandwich</span>
+          </div>
+          <div class="menu-card__body">
+            <h3>Menu Tandoori</h3>
+            <p>Pain plat, poulet mariné au tandoori, cheddar fondu, salade, sauce blanche + Frites + Boisson</p>
+            <div class="menu-card__footer">
+              <span class="menu-card__price">€13.00</span>
+              <a href="tel:+32484109199" class="btn btn--orange btn--sm">Ajouter</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card" data-cat="menus-sandwichs">
+          <div class="menu-card__img">
+            <img src="brand_assets/Menu/Menu Crousty.jpeg" alt="Menu Crousty" />
+            <span class="menu-card__cat">Menu Sandwich</span>
+          </div>
+          <div class="menu-card__body">
+            <h3>Menu Crousty</h3>
+            <p>Pain plat croustillant, poulet pané maison, cheddar fondant, sauce blanche onctueuse + Frites + Boisson</p>
+            <div class="menu-card__footer">
+              <span class="menu-card__price">€15.00</span>
+              <a href="tel:+32484109199" class="btn btn--orange btn--sm">Ajouter</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── POULET ── -->
+        <div class="menu-card" data-cat="poulet">
+          <div class="menu-card__img">
+            <img src="brand_assets/Menu/Tenders.jpeg" alt="Tenders" />
+            <span class="menu-card__cat">Poulet</span>
+          </div>
+          <div class="menu-card__body">
+            <h3>Tenders</h3>
+            <p>Tenders de poulet croustillants, panure épicée maison, sauce au choix</p>
+            <div class="menu-card__footer">
+              <span class="menu-card__price">€8.50</span>
+              <a href="tel:+32484109199" class="btn btn--orange btn--sm">Ajouter</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card" data-cat="poulet">
+          <div class="menu-card__img">
+            <img src="brand_assets/Menu/Wings.jpeg" alt="Wings" />
+            <span class="menu-card__cat">Poulet</span>
+          </div>
+          <div class="menu-card__body">
+            <h3>Wings</h3>
+            <p>Ailes de poulet croustillantes panées maison, relevées à souhait, sauce au choix</p>
+            <div class="menu-card__footer">
+              <span class="menu-card__price">€7.50</span>
+              <a href="tel:+32484109199" class="btn btn--orange btn--sm">Ajouter</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card" data-cat="poulet">
+          <div class="menu-card__img">
+            <img src="brand_assets/Menu/Bucket Duo.jpeg" alt="Bucket Duo" />
+            <span class="menu-card__cat menu-card__cat--star">⭐ À Partager</span>
+          </div>
+          <div class="menu-card__body">
+            <h3>Bucket Duo</h3>
+            <p>Grand seau de tenders croustillants Blue. — pour les appétits généreux ou à partager</p>
+            <div class="menu-card__footer">
+              <span class="menu-card__price">€14.90</span>
+              <a href="tel:+32484109199" class="btn btn--orange btn--sm">Ajouter</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── ACCOMPAGNEMENTS ── -->
+        <div class="menu-card" data-cat="accompagnements">
+          <div class="menu-card__img">
+            <img src="brand_assets/Menu/Frites.jpeg" alt="Frites" />
+            <span class="menu-card__cat">Accompagnement</span>
+          </div>
+          <div class="menu-card__body">
+            <h3>Frites Gaufrettes</h3>
+            <p>Frites gaufrettes croustillantes, assaisonnement maison</p>
+            <div class="menu-card__footer">
+              <span class="menu-card__price">€3.50</span>
+              <a href="tel:+32484109199" class="btn btn--orange btn--sm">Ajouter</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card" data-cat="accompagnements">
+          <div class="menu-card__img">
+            <img src="brand_assets/Menu/Mozza Stick.jpeg" alt="Mozza Stick" />
+            <span class="menu-card__cat">Accompagnement</span>
+          </div>
+          <div class="menu-card__body">
+            <h3>Mozza Stick</h3>
+            <p>Bâtonnets de mozzarella panés, cœur fondant, sauce tomate maison</p>
+            <div class="menu-card__footer">
+              <span class="menu-card__price">€4.50</span>
+              <a href="tel:+32484109199" class="btn btn--orange btn--sm">Ajouter</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card" data-cat="boissons">
+          <div class="menu-card__img">
+            <img src="brand_assets/Menu/Poms.jpeg" alt="Poms" />
+            <span class="menu-card__cat">Boisson</span>
+          </div>
+          <div class="menu-card__body">
+            <h3>Poms</h3>
+            <p>Soda pétillant à la pomme — rafraîchissant et fruité, canette 33cl</p>
+            <div class="menu-card__footer">
+              <span class="menu-card__price">€3.50</span>
+              <a href="tel:+32484109199" class="btn btn--orange btn--sm">Ajouter</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card" data-cat="accompagnements">
+          <div class="menu-card__img">
+            <img src="brand_assets/Menu/Sauce Cheddar.jpeg" alt="Sauce Cheddar" />
+            <span class="menu-card__cat">Accompagnement</span>
+          </div>
+          <div class="menu-card__body">
+            <h3>Sauce Cheddar</h3>
+            <p>Sauce cheddar fondante et onctueuse maison — à tremper sans modération</p>
+            <div class="menu-card__footer">
+              <span class="menu-card__price">€3.00</span>
+              <a href="tel:+32484109199" class="btn btn--orange btn--sm">Ajouter</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── BOISSONS ── -->
+        <div class="menu-card" data-cat="boissons">
+          <div class="menu-card__img">
+            <img src="brand_assets/Menu/Coca Cola.jpeg" alt="Coca-Cola" />
+            <span class="menu-card__cat">Boisson</span>
+          </div>
+          <div class="menu-card__body">
+            <h3>Coca-Cola</h3>
+            <p>Canette 33cl — fraîche et rafraîchissante</p>
+            <div class="menu-card__footer">
+              <span class="menu-card__price">€2.50</span>
+              <a href="tel:+32484109199" class="btn btn--orange btn--sm">Ajouter</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card" data-cat="boissons">
+          <div class="menu-card__img">
+            <img src="brand_assets/Menu/Coca Cola Zéro.jpeg" alt="Coca-Cola Zéro" />
+            <span class="menu-card__cat">Boisson</span>
+          </div>
+          <div class="menu-card__body">
+            <h3>Coca-Cola Zéro</h3>
+            <p>Canette 33cl — même goût, sans sucre</p>
+            <div class="menu-card__footer">
+              <span class="menu-card__price">€2.50</span>
+              <a href="tel:+32484109199" class="btn btn--orange btn--sm">Ajouter</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card" data-cat="boissons">
+          <div class="menu-card__img">
+            <img src="brand_assets/Menu/Fanta Orange.jpeg" alt="Fanta Orange" />
+            <span class="menu-card__cat">Boisson</span>
+          </div>
+          <div class="menu-card__body">
+            <h3>Fanta Orange</h3>
+            <p>Canette 33cl — pétillant et fruité</p>
+            <div class="menu-card__footer">
+              <span class="menu-card__price">€2.50</span>
+              <a href="tel:+32484109199" class="btn btn--orange btn--sm">Ajouter</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card" data-cat="boissons">
+          <div class="menu-card__img">
+            <img src="brand_assets/Menu/Fanta Exotic.jpeg" alt="Fanta Exotic" />
+            <span class="menu-card__cat">Boisson</span>
+          </div>
+          <div class="menu-card__body">
+            <h3>Fanta Exotic</h3>
+            <p>Canette 33cl — saveur exotique ensoleillée</p>
+            <div class="menu-card__footer">
+              <span class="menu-card__price">€2.50</span>
+              <a href="tel:+32484109199" class="btn btn--orange btn--sm">Ajouter</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card" data-cat="boissons">
+          <div class="menu-card__img">
+            <img src="brand_assets/Menu/Oasis Tropical.jpeg" alt="Oasis Tropical" />
+            <span class="menu-card__cat">Boisson</span>
+          </div>
+          <div class="menu-card__body">
+            <h3>Oasis Tropical</h3>
+            <p>Canette 33cl — fruits tropicaux, saveur intense</p>
+            <div class="menu-card__footer">
+              <span class="menu-card__price">€2.50</span>
+              <a href="tel:+32484109199" class="btn btn--orange btn--sm">Ajouter</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card" data-cat="boissons">
+          <div class="menu-card__img">
+            <img src="brand_assets/Menu/Oasis Fraise Framboise.jpeg" alt="Oasis Fraise Framboise" />
+            <span class="menu-card__cat">Boisson</span>
+          </div>
+          <div class="menu-card__body">
+            <h3>Oasis Fraise Framboise</h3>
+            <p>Canette 33cl — fraise et framboise, fraîcheur garantie</p>
+            <div class="menu-card__footer">
+              <span class="menu-card__price">€2.50</span>
+              <a href="tel:+32484109199" class="btn btn--orange btn--sm">Ajouter</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card" data-cat="boissons">
+          <div class="menu-card__img">
+            <img src="brand_assets/Menu/Schweppes Agrumes.jpeg" alt="Schweppes Agrumes" />
+            <span class="menu-card__cat">Boisson</span>
+          </div>
+          <div class="menu-card__body">
+            <h3>Schweppes Agrumes</h3>
+            <p>Canette 33cl — tonic aux agrumes, pétillant et désaltérant</p>
+            <div class="menu-card__footer">
+              <span class="menu-card__price">€2.50</span>
+              <a href="tel:+32484109199" class="btn btn--orange btn--sm">Ajouter</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── DESSERTS ── -->
+        <div class="menu-card" data-cat="desserts">
+          <div class="menu-card__img">
+            <img src="brand_assets/Menu/Tarte Au Daim.jpeg" alt="Tarte Au Daim" />
+            <span class="menu-card__cat">Dessert</span>
+          </div>
+          <div class="menu-card__body">
+            <h3>Tarte Au Daim</h3>
+            <p>Tarte sablée au Daim, chocolat au lait, pralinoise croquante</p>
+            <div class="menu-card__footer">
+              <span class="menu-card__price">€4.50</span>
+              <a href="tel:+32484109199" class="btn btn--orange btn--sm">Ajouter</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card" data-cat="desserts">
+          <div class="menu-card__img">
+            <img src="brand_assets/Menu/Tiramisu Speculoos.jpeg" alt="Tiramisu Spéculoos" />
+            <span class="menu-card__cat">Dessert</span>
+          </div>
+          <div class="menu-card__body">
+            <h3>Tiramisu Spéculoos</h3>
+            <p>Tiramisu onctueux aux biscuits Spéculoos, crème mascarpone légère</p>
+            <div class="menu-card__footer">
+              <span class="menu-card__price">€4.50</span>
+              <a href="tel:+32484109199" class="btn btn--orange btn--sm">Ajouter</a>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /menu__grid -->
+    </div>
+  </section>
+
+  <!-- ========== AVIS CLIENTS ========== -->
+  <section class="reviews section section--blue" id="avis">
+    <div class="container">
+      <div class="section__header">
+        <span class="section__label section__label--light">Avis Google</span>
+        <h2 class="section__title section__title--light">Ce que disent nos clients</h2>
+      </div>
+      <div class="reviews__grid">
+
+        <div class="review-card">
+          <div class="review-card__stars">★★★★★</div>
+          <p>"Je vous conseille vraiment ce fast-food, j'ai été accueilli et servi comme un roi du début à la fin. Très aimable et souriant le jeune homme à la caisse comme en cuisine. J'y retournerais sans hésité. 😋😋👍🏼"</p>
+          <div class="review-card__author">
+            <div class="review-card__avatar">H</div>
+            <div>
+              <strong>Houssein Benamar</strong>
+              <span>Google</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-card__stars">★★★★★</div>
+          <p>"Les frr je conseille de fouuu c'est le meilleur fast food que j'ai mangé. En terme de quantité y'a rien à dire c'est vrmt fort."</p>
+          <div class="review-card__author">
+            <div class="review-card__avatar">A</div>
+            <div>
+              <strong>Amine alitame</strong>
+              <span>Google</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-card__stars">★★★★★</div>
+          <p>"Rien à redire, tout est au top. Un endroit discret à la façade épurée, mais qui surprend avec des sandwichs tandoori (et autres) absolument délicieux… à découvrir sans hésiter !"</p>
+          <div class="review-card__author">
+            <div class="review-card__avatar">R</div>
+            <div>
+              <strong>Rc Shak</strong>
+              <span>Google</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="reviews__stats">
+        <div class="stat">
+          <span class="stat__num">4.9</span>
+          <span class="stat__label">Note Google</span>
+        </div>
+        <div class="stat__divider"></div>
+        <div class="stat">
+          <span class="stat__num">500+</span>
+          <span class="stat__label">Avis clients</span>
+        </div>
+        <div class="stat__divider"></div>
+        <div class="stat">
+          <span class="stat__num">Halal</span>
+          <span class="stat__label">Certifié</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== ADRESSE ========== -->
+  <section class="locations section" id="adresse">
+    <div class="container">
+      <div class="section__header">
+        <span class="section__label">Nous Trouver</span>
+        <h2 class="section__title">Notre Adresse</h2>
+      </div>
+      <div class="location-single">
+        <div class="location-main">
+          <div class="location-main__info">
+            <div class="location-icon">📍</div>
+            <div>
+              <h3>Blue. Molenbeek</h3>
+              <p class="location-address">Bd du Jubilé 44<br />1080 Molenbeek-Saint-Jean<br />Bruxelles, Belgique</p>
+            </div>
+          </div>
+          <div class="location-main__details">
+            <div class="location-detail">
+              <span class="location-detail__label">🕐 Horaires</span>
+              <div class="location-hours">
+                <div class="hours-row">
+                  <span>Lundi – Dimanche</span>
+                  <span class="hours-time">17h00 – 02h00</span>
+                </div>
+                <div class="hours-badge">Ouvert 7j/7</div>
+              </div>
+            </div>
+            <div class="location-detail">
+              <span class="location-detail__label">📞 Téléphone</span>
+              <a href="tel:+32484109199" class="location-phone">0484 10 91 99</a>
+            </div>
+          </div>
+          <div class="location-main__actions">
+            <a href="https://maps.google.com/?q=Bd+du+Jubil%C3%A9+44,+1080+Molenbeek-Saint-Jean,+Bruxelles,+Belgique" target="_blank" class="btn btn--orange btn--lg">Itinéraire Google Maps</a>
+            <a href="tel:+32484109199" class="btn btn--outline-dark btn--lg">Appeler</a>
+          </div>
+        </div>
+        <div class="location-map">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2519.872038576088!2d4.328100!3d50.859800!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c3c484ca48e0b7%3A0x5bce0c4ba72b5769!2sBd%20du%20Jubil%C3%A9%2044%2C%201080%20Molenbeek-Saint-Jean%2C%20Belgique!5e0!3m2!1sfr!2sbe!4v1714000000000"
+            width="100%"
+            height="100%"
+            style="border:0;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Blue. Molenbeek sur Google Maps">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== COMMANDER CTA ========== -->
+  <section class="order-cta" id="commander">
+    <div class="order-cta__bg"></div>
+    <div class="container order-cta__content">
+      <h2>Prêt à Commander ?</h2>
+      <p>Sur place ou à emporter — appelez-nous et votre commande sera prête.</p>
+      <div class="order-cta__btns">
+        <a href="tel:+32484109199" class="btn btn--orange btn--lg">📞 0484 10 91 99</a>
+      </div>
+      <div class="order-cta__apps">
+        <span>Aussi disponible sur</span>
+        <div class="order-cta__badges">
+          <span class="app-badge">Uber Eats</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__top">
+        <div class="footer__brand">
+          <img src="brand_assets/Blue Logo.png" alt="Blue." class="footer__logo" />
+          <p>Vrais burgers, vraies saveurs, préparés frais pour vous — à chaque commande.</p>
+          <div class="footer__contact">
+            <a href="tel:+32484109199">📞 0484 10 91 99</a>
+            <span>📍 Bd du Jubilé 44, 1080 Molenbeek</span>
+            <span>🕐 Tous les jours · 17h00 – 02h00</span>
+          </div>
+          <div class="footer__social">
+            <a href="#" aria-label="Instagram" class="social-link">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+            </a>
+            <a href="#" aria-label="TikTok" class="social-link">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+            </a>
+            <a href="#" aria-label="Facebook" class="social-link">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="footer__links">
+          <div class="footer__col">
+            <h4>Menu</h4>
+            <a href="#menu">Menus Burgers</a>
+            <a href="#menu">Menus Sandwichs</a>
+            <a href="#menu">Poulet</a>
+            <a href="#menu">Accompagnements</a>
+            <a href="#menu">Desserts</a>
+          </div>
+          <div class="footer__col">
+            <h4>Commander</h4>
+            <a href="tel:+32484109199">📞 0484 10 91 99</a>
+            <a href="#">Uber Eats</a>
+            <a href="#adresse">Sur Place</a>
+          </div>
+          <div class="footer__col">
+            <h4>Infos</h4>
+            <a href="#">À Propos</a>
+            <a href="#">Allergènes</a>
+            <a href="#">Valeurs Nutritionnelles</a>
+            <a href="#">Contact</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <span>© 2026 Blue. Tous droits réservés · Molenbeek-Saint-Jean, Bruxelles</span>
+        <div class="footer__legal">
+          <a href="#">Mentions Légales</a>
+          <a href="#">Politique de Confidentialité</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
