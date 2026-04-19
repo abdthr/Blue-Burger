@@ -3,15 +3,452 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Blue Burger</title>
+  <title>Blue. — Vrais Burgers, Vraies Saveurs · Molenbeek</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy-deep:   #07101f;
+      --navy:        #0d1a3a;
+      --navy-mid:    #101e3f;
+      --blue:        #1E5AC8;
+      --orange:      #E8631A;
+      --orange-lit:  #ff7a35;
+      --yellow:      #F5B800;
+      --cream:       #f8f3eb;
+      --white:       #ffffff;
+      --border:      rgba(255,255,255,0.07);
+      --muted:       rgba(255,255,255,0.5);
+      --radius:      14px;
+      --ease:        cubic-bezier(.25,.46,.45,.94);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: var(--navy-deep);
+      color: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* grain texture */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: .35;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
+    }
+
+    .container { width: min(1200px, 100% - 2.5rem); margin-inline: auto; }
+
+    /* ── Buttons ── */
+    .btn {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .75rem 1.5rem; border-radius: 100px;
+      font-family: 'Montserrat', sans-serif; font-weight: 700;
+      font-size: .875rem; letter-spacing: .03em;
+      text-decoration: none; cursor: pointer; border: none;
+      transition: transform .2s var(--ease), box-shadow .2s var(--ease), background .2s var(--ease);
+    }
+    .btn:hover  { transform: translateY(-2px); }
+    .btn:active { transform: translateY(0); }
+    .btn--orange {
+      background: var(--orange); color: #fff;
+      box-shadow: 0 4px 20px rgba(232,99,26,.35);
+    }
+    .btn--orange:hover { background: var(--orange-lit); box-shadow: 0 8px 30px rgba(232,99,26,.5); }
+    .btn--outline {
+      background: transparent; color: #fff;
+      border: 2px solid rgba(255,255,255,.3);
+    }
+    .btn--outline:hover { border-color: rgba(255,255,255,.8); background: rgba(255,255,255,.07); }
+    .btn--outline-light {
+      background: transparent; color: var(--navy);
+      border: 2px solid rgba(13,26,58,.25);
+    }
+    .btn--outline-light:hover { border-color: var(--navy); background: rgba(13,26,58,.06); }
+    .btn--lg { padding: 1rem 2rem; font-size: 1rem; }
+    .btn--sm { padding: .5rem 1.125rem; font-size: .78rem; }
+
+    /* ── NAV ── */
+    .nav {
+      position: fixed; top: 0; width: 100%; z-index: 200;
+      transition: background .3s var(--ease), backdrop-filter .3s;
+    }
+    .nav.scrolled {
+      background: rgba(7,16,31,.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav__container {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.25rem 0;
+      width: min(1200px, 100% - 2.5rem); margin-inline: auto;
+    }
+    .nav__logo img { height: 42px; width: auto; }
+    .nav__links { display: flex; gap: 2.5rem; }
+    .nav__links a {
+      color: rgba(255,255,255,.7); text-decoration: none;
+      font-size: .85rem; font-weight: 600; letter-spacing: .04em;
+      transition: color .2s;
+    }
+    .nav__links a:hover { color: #fff; }
+    .nav__burger {
+      display: none; flex-direction: column; gap: 5px;
+      background: none; border: none; cursor: pointer; padding: .5rem;
+    }
+    .nav__burger span {
+      display: block; width: 24px; height: 2px; background: #fff;
+      border-radius: 2px; transition: transform .3s var(--ease), opacity .3s;
+    }
+    .nav__mobile {
+      display: none; flex-direction: column; gap: 1rem;
+      padding: 1.5rem 1.5rem 2rem;
+      background: rgba(7,16,31,.97); backdrop-filter: blur(20px);
+      border-top: 1px solid var(--border);
+    }
+    .nav__mobile.open { display: flex; }
+    .nav__mobile a {
+      color: rgba(255,255,255,.8); text-decoration: none;
+      font-weight: 600; font-size: 1.05rem; transition: color .2s;
+    }
+    .nav__mobile a:hover { color: #fff; }
+    @media (max-width: 768px) {
+      .nav__links, .nav__cta { display: none; }
+      .nav__burger { display: flex; }
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative; min-height: 100vh;
+      display: flex; align-items: center; overflow: hidden;
+    }
+    .hero__bg { position: absolute; inset: 0; }
+    .hero__bg img {
+      width: 100%; height: 100%; object-fit: cover;
+      animation: heroZoom 9s var(--ease) forwards;
+    }
+    @keyframes heroZoom {
+      from { transform: scale(1.1); }
+      to   { transform: scale(1); }
+    }
+    .hero__overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(125deg, rgba(7,16,31,.93) 0%, rgba(7,16,31,.72) 55%, rgba(7,16,31,.35) 100%);
+    }
+    .hero__overlay::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 65% 50%, rgba(30,90,200,.1) 0%, transparent 70%);
+    }
+    .hero__content {
+      position: relative; z-index: 2;
+      width: min(1200px, 100% - 2.5rem); margin-inline: auto;
+      padding: 9rem 0 5rem; max-width: 620px;
+    }
+    .hero__badge {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: rgba(255,255,255,.09); backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,.14); color: rgba(255,255,255,.82);
+      font-size: .72rem; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; padding: .45rem 1rem; border-radius: 100px;
+      margin-bottom: 2rem; animation: fadeUp .6s var(--ease) both;
+    }
+    .hero__badge::before {
+      content: ''; width: 6px; height: 6px; border-radius: 50%;
+      background: #4ade80; animation: blink 2s ease infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+    .hero__headline {
+      font-size: clamp(2.8rem, 7.5vw, 5.2rem); font-weight: 900;
+      line-height: 1.04; letter-spacing: -.03em; margin-bottom: 1.5rem;
+      animation: fadeUp .6s .1s var(--ease) both;
+    }
+    .hero__headline .accent { color: var(--orange); }
+    .hero__sub {
+      font-size: 1rem; line-height: 1.75; color: rgba(255,255,255,.65);
+      max-width: 480px; margin-bottom: 2.5rem;
+      animation: fadeUp .6s .2s var(--ease) both;
+    }
+    .hero__actions { display: flex; gap: 1rem; flex-wrap: wrap; animation: fadeUp .6s .3s var(--ease) both; }
+    .hero__scroll {
+      position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+      z-index: 2; display: flex; flex-direction: column; align-items: center;
+    }
+    .hero__scroll span {
+      display: block; width: 1px; height: 48px;
+      background: linear-gradient(to bottom, rgba(255,255,255,.5), transparent);
+      animation: scrollDrop 2s ease-in-out infinite;
+    }
+    @keyframes scrollDrop {
+      0%   { transform: scaleY(0); transform-origin: top; }
+      50%  { transform: scaleY(1); transform-origin: top; }
+      51%  { transform: scaleY(1); transform-origin: bottom; }
+      100% { transform: scaleY(0); transform-origin: bottom; }
+    }
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(22px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    /* ── TICKER ── */
+    .ticker { background: var(--orange); overflow: hidden; padding: .875rem 0; }
+    .ticker__track {
+      display: flex; gap: 2rem; align-items: center;
+      white-space: nowrap; width: max-content;
+      animation: tick 32s linear infinite;
+    }
+    .ticker__track span { font-size: .78rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #fff; }
+    .ticker__dot { color: rgba(255,255,255,.45) !important; }
+    @keyframes tick { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+    /* ── SECTIONS ── */
+    .section { padding: 6rem 0; }
+    .section__header { text-align: center; margin-bottom: 4rem; }
+    .section__label {
+      display: inline-block; font-family: 'Bebas Neue', sans-serif;
+      font-size: .95rem; letter-spacing: .22em; text-transform: uppercase;
+      color: var(--orange); margin-bottom: .75rem;
+    }
+    .section__title {
+      font-size: clamp(2rem, 4vw, 3rem); font-weight: 900;
+      letter-spacing: -.025em; line-height: 1.1;
+    }
+    .section__sub { margin-top: .75rem; font-size: .93rem; line-height: 1.7; opacity: .55; }
+    .section__title--light { color: #fff; }
+    .section__title--dark  { color: var(--navy); }
+
+    /* ── WHY US ── */
+    .why-us { background: var(--navy-deep); padding: 6rem 0; }
+    .why-us__grid {
+      display: grid; grid-template-columns: repeat(4,1fr); gap: 1.25rem;
+    }
+    @media (max-width: 900px) { .why-us__grid { grid-template-columns: repeat(2,1fr); } }
+    @media (max-width: 500px) { .why-us__grid { grid-template-columns: 1fr; } }
+    .why-card {
+      background: rgba(255,255,255,.04); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 2rem 1.5rem;
+      transition: transform .3s var(--ease), border-color .3s, box-shadow .3s;
+    }
+    .why-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(232,99,26,.35);
+      box-shadow: 0 20px 50px rgba(232,99,26,.08);
+    }
+    .why-card__icon { font-size: 2rem; margin-bottom: 1.25rem; display: block; }
+    .why-card h3 { font-size: .95rem; font-weight: 800; margin-bottom: .625rem; }
+    .why-card p  { font-size: .825rem; line-height: 1.7; color: var(--muted); }
+
+    /* ── MENU ── */
+    .menu-section { background: var(--navy-mid); padding: 6rem 0; }
+    .menu__tabs-wrap {
+      overflow-x: auto; -webkit-overflow-scrolling: touch;
+      scrollbar-width: none; margin-bottom: 3rem;
+    }
+    .menu__tabs-wrap::-webkit-scrollbar { display: none; }
+    .menu__tabs {
+      display: flex; gap: .4rem; width: max-content; margin-inline: auto;
+      background: rgba(255,255,255,.05); border: 1px solid var(--border);
+      padding: .375rem; border-radius: 100px;
+    }
+    .menu__tab {
+      padding: .6rem 1.2rem; border-radius: 100px; border: none;
+      background: transparent; color: rgba(255,255,255,.55);
+      font-family: 'Montserrat', sans-serif; font-size: .78rem; font-weight: 700;
+      letter-spacing: .04em; cursor: pointer; white-space: nowrap;
+      transition: background .2s, color .2s, box-shadow .2s;
+    }
+    .menu__tab:hover { color: #fff; }
+    .menu__tab.active {
+      background: var(--orange); color: #fff;
+      box-shadow: 0 4px 14px rgba(232,99,26,.4);
+    }
+    .menu__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(235px, 1fr));
+      gap: 1.125rem;
+    }
+    .menu-card {
+      background: rgba(255,255,255,.04); border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden;
+      display: flex; flex-direction: column;
+      transition: transform .3s var(--ease), border-color .3s, box-shadow .3s;
+    }
+    .menu-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(30,90,200,.4);
+      box-shadow: 0 16px 40px rgba(0,0,0,.45), 0 0 0 1px rgba(30,90,200,.12);
+    }
+    .menu-card.hidden { display: none; }
+    .menu-card__img {
+      position: relative; height: 150px; overflow: hidden;
+      background: rgba(0,0,0,.3); flex-shrink: 0;
+    }
+    .menu-card__img img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform .4s var(--ease);
+    }
+    .menu-card:hover .menu-card__img img { transform: scale(1.07); }
+    .menu-card__img::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(7,16,31,.65) 0%, transparent 55%);
+      pointer-events: none;
+    }
+    .menu-card__cat {
+      position: absolute; top: .7rem; left: .7rem; z-index: 1;
+      background: rgba(7,16,31,.75); backdrop-filter: blur(8px);
+      color: rgba(255,255,255,.8); font-size: .62rem; font-weight: 800;
+      letter-spacing: .08em; text-transform: uppercase;
+      padding: .28rem .6rem; border-radius: 100px;
+      border: 1px solid rgba(255,255,255,.1);
+    }
+    .menu-card__cat--star { background: rgba(245,184,0,.18); color: var(--yellow); border-color: rgba(245,184,0,.28); }
+    .menu-card__cat--new  { background: rgba(30,90,200,.18); color: #7aacff; border-color: rgba(30,90,200,.28); }
+    .menu-card__body {
+      padding: 1.125rem; display: flex; flex-direction: column; flex: 1;
+    }
+    .menu-card__body h3 { font-size: .9rem; font-weight: 800; letter-spacing: -.01em; margin-bottom: .45rem; }
+    .menu-card__body p  { font-size: .755rem; line-height: 1.65; color: rgba(255,255,255,.48); flex: 1; margin-bottom: .875rem; }
+    .menu-card__footer  { display: flex; align-items: center; justify-content: space-between; margin-top: auto; }
+    .menu-card__price   { font-size: 1.1rem; font-weight: 900; color: var(--orange); letter-spacing: -.02em; }
+
+    /* ── REVIEWS ── */
+    .reviews-section { background: var(--navy); padding: 6rem 0; }
+    .reviews__grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.25rem; margin-bottom: 3.5rem; }
+    @media (max-width: 900px) { .reviews__grid { grid-template-columns: 1fr; } }
+    .review-card {
+      background: rgba(255,255,255,.04); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 2rem;
+      transition: transform .3s var(--ease), border-color .3s;
+    }
+    .review-card:hover { transform: translateY(-4px); border-color: rgba(245,184,0,.28); }
+    .review-card__stars { color: var(--yellow); font-size: 1rem; letter-spacing: .1em; margin-bottom: 1rem; }
+    .review-card p { font-size: .85rem; line-height: 1.75; color: rgba(255,255,255,.62); margin-bottom: 1.5rem; font-style: italic; }
+    .review-card__author { display: flex; align-items: center; gap: .875rem; }
+    .review-card__avatar {
+      width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0;
+      background: linear-gradient(135deg, var(--blue), #2d6bff);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: .9rem;
+    }
+    .review-card__author strong { display: block; font-size: .85rem; font-weight: 700; }
+    .review-card__author span  { font-size: .72rem; color: rgba(255,255,255,.4); }
+    .reviews__stats {
+      display: flex; align-items: center; justify-content: center; gap: 3rem;
+      padding: 2.25rem; background: rgba(255,255,255,.04);
+      border: 1px solid var(--border); border-radius: var(--radius);
+    }
+    @media (max-width: 600px) { .reviews__stats { flex-direction: column; gap: 1.5rem; } .stat__divider { width: 60px; height: 1px; } }
+    .stat { text-align: center; }
+    .stat__num   { display: block; font-size: 2.25rem; font-weight: 900; letter-spacing: -.04em; color: var(--orange); }
+    .stat__label { font-size: .72rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.4); }
+    .stat__divider { width: 1px; height: 48px; background: var(--border); }
+
+    /* ── LOCATION ── */
+    .location-section { background: var(--cream); padding: 6rem 0; }
+    .location-section .section__label { color: var(--orange); }
+    .location-section .section__header { margin-bottom: 3.5rem; }
+    .location-single { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: stretch; }
+    @media (max-width: 768px) { .location-single { grid-template-columns: 1fr; } }
+    .location-main {
+      background: var(--navy); border-radius: var(--radius); padding: 2.5rem;
+      color: #fff; display: flex; flex-direction: column; gap: 1.75rem;
+    }
+    .location-main__info { display: flex; gap: 1rem; align-items: flex-start; }
+    .location-icon { font-size: 1.4rem; margin-top: .15rem; flex-shrink: 0; }
+    .location-main__info h3 { font-size: 1.2rem; font-weight: 800; margin-bottom: .4rem; }
+    .location-address { font-size: .875rem; line-height: 1.7; color: rgba(255,255,255,.58); }
+    .location-detail__label {
+      display: block; font-size: .68rem; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; color: rgba(255,255,255,.38); margin-bottom: .5rem;
+    }
+    .location-hours { display: flex; flex-direction: column; gap: .4rem; }
+    .hours-row { display: flex; justify-content: space-between; font-size: .875rem; }
+    .hours-time { font-weight: 700; color: var(--orange); }
+    .hours-badge {
+      display: inline-block; background: rgba(74,222,128,.13); color: #4ade80;
+      font-size: .68rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+      padding: .28rem .65rem; border-radius: 100px; border: 1px solid rgba(74,222,128,.2); margin-top: .4rem;
+    }
+    .location-phone { font-size: 1.2rem; font-weight: 800; color: #fff; text-decoration: none; transition: color .2s; }
+    .location-phone:hover { color: var(--orange); }
+    .location-main__actions { display: flex; gap: .875rem; flex-wrap: wrap; margin-top: auto; }
+    .location-map { border-radius: var(--radius); overflow: hidden; min-height: 380px; border: 2px solid rgba(0,0,0,.07); }
+    .location-map iframe { width: 100%; height: 100%; display: block; }
+
+    /* ── ORDER CTA ── */
+    .order-cta {
+      position: relative; padding: 7rem 0; text-align: center; overflow: hidden;
+      background: var(--navy-deep);
+    }
+    .order-cta::before {
+      content: ''; position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 70% 80% at 50% 50%, rgba(232,99,26,.13) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 60% at 20% 80%, rgba(30,90,200,.09) 0%, transparent 60%);
+    }
+    .order-cta__content { position: relative; z-index: 1; }
+    .order-cta h2 { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; letter-spacing: -.03em; margin-bottom: 1rem; }
+    .order-cta p { font-size: 1rem; color: rgba(255,255,255,.58); margin-bottom: 2.5rem; }
+    .order-cta__btns { margin-bottom: 1.5rem; }
+    .order-cta__apps { display: flex; align-items: center; justify-content: center; gap: .75rem; }
+    .order-cta__apps > span { font-size: .78rem; color: rgba(255,255,255,.38); }
+    .app-badge {
+      background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.1);
+      color: rgba(255,255,255,.65); font-size: .72rem; font-weight: 700;
+      padding: .32rem .8rem; border-radius: 100px;
+    }
+
+    /* ── FOOTER ── */
+    .footer { background: var(--navy-deep); border-top: 1px solid var(--border); padding: 4rem 0 2rem; }
+    .footer__top {
+      display: grid; grid-template-columns: 1.4fr 1fr; gap: 4rem;
+      padding-bottom: 3rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem;
+    }
+    @media (max-width: 768px) { .footer__top { grid-template-columns: 1fr; gap: 2.5rem; } }
+    .footer__logo { height: 38px; width: auto; margin-bottom: 1rem; }
+    .footer__brand p { font-size: .85rem; line-height: 1.7; color: rgba(255,255,255,.42); max-width: 300px; margin-bottom: 1.5rem; }
+    .footer__contact { display: flex; flex-direction: column; gap: .45rem; margin-bottom: 1.5rem; }
+    .footer__contact a, .footer__contact span { font-size: .82rem; color: rgba(255,255,255,.48); text-decoration: none; transition: color .2s; }
+    .footer__contact a:hover { color: var(--orange); }
+    .footer__social { display: flex; gap: .625rem; }
+    .social-link {
+      width: 36px; height: 36px; border-radius: 10px; border: 1px solid var(--border);
+      background: rgba(255,255,255,.04); display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,.45); transition: border-color .2s, background .2s, color .2s;
+    }
+    .social-link:hover { border-color: var(--orange); background: rgba(232,99,26,.1); color: var(--orange); }
+    .social-link svg { width: 15px; height: 15px; }
+    .footer__links { display: grid; grid-template-columns: repeat(3,1fr); gap: 2rem; }
+    @media (max-width: 500px) { .footer__links { grid-template-columns: repeat(2,1fr); } }
+    .footer__col { display: flex; flex-direction: column; gap: .6rem; }
+    .footer__col h4 { font-size: .72rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.3); margin-bottom: .75rem; }
+    .footer__col a { font-size: .82rem; color: rgba(255,255,255,.52); text-decoration: none; transition: color .2s; }
+    .footer__col a:hover { color: #fff; }
+    .footer__bottom { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+    .footer__bottom span, .footer__legal a { font-size: .75rem; color: rgba(255,255,255,.28); text-decoration: none; }
+    .footer__legal { display: flex; gap: 1.5rem; }
+    .footer__legal a:hover { color: rgba(255,255,255,.55); }
+
+    /* ── Scroll reveal ── */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal--d1 { transition-delay: .1s; }
+    .reveal--d2 { transition-delay: .2s; }
+    .reveal--d3 { transition-delay: .3s; }
+  </style>
 </head>
 <body>
 
-  <!-- ========== NAVIGATION ========== -->
+  <!-- NAV -->
   <header class="nav" id="nav">
     <div class="nav__container">
       <a href="#" class="nav__logo">
@@ -19,7 +456,6 @@
       </a>
       <nav class="nav__links">
         <a href="#menu">Menu</a>
-        <a href="#pourquoi-nous">À Propos</a>
         <a href="#adresse">Notre Adresse</a>
       </nav>
       <a href="tel:+32484109199" class="btn btn--orange nav__cta">Commander</a>
@@ -29,13 +465,12 @@
     </div>
     <div class="nav__mobile" id="navMobile">
       <a href="#menu">Menu</a>
-      <a href="#pourquoi-nous">À Propos</a>
       <a href="#adresse">Notre Adresse</a>
       <a href="tel:+32484109199" class="btn btn--orange">Commander</a>
     </div>
   </header>
 
-  <!-- ========== HERO ========== -->
+  <!-- HERO -->
   <section class="hero" id="accueil">
     <div class="hero__bg">
       <img src="brand_assets/Banner.png" alt="Blue. — nos spécialités" />
@@ -45,7 +480,7 @@
       <div class="hero__badge">Molenbeek-Saint-Jean · Ouvert tous les jours</div>
       <h1 class="hero__headline">
         Vrais Burgers.<br />
-        <span class="text--orange">Vraies</span> Saveurs.
+        <span class="accent">Vraies</span> Saveurs.
       </h1>
       <p class="hero__sub">
         Burgers généreux, poulet croustillant et accompagnements qui font la différence —
@@ -59,89 +494,38 @@
     <div class="hero__scroll"><span></span></div>
   </section>
 
-  <!-- ========== TICKER ========== -->
+  <!-- TICKER -->
   <div class="ticker">
     <div class="ticker__track">
-      <span>Menu Blue</span>
-      <span class="ticker__dot">●</span>
-      <span>Tenders Croustillants</span>
-      <span class="ticker__dot">●</span>
-      <span>Menu Tower</span>
-      <span class="ticker__dot">●</span>
-      <span>Frites Gaufrettes</span>
-      <span class="ticker__dot">●</span>
-      <span>Bucket Duo</span>
-      <span class="ticker__dot">●</span>
-      <span>Menu Double Trouble</span>
-      <span class="ticker__dot">●</span>
-      <span>Mozza Stick</span>
-      <span class="ticker__dot">●</span>
-      <span>Menu Fermier</span>
-      <span class="ticker__dot">●</span>
-      <span>Tiramisu Spéculoos</span>
-      <span class="ticker__dot">●</span>
-      <span>Menu Blue</span>
-      <span class="ticker__dot">●</span>
-      <span>Tenders Croustillants</span>
-      <span class="ticker__dot">●</span>
-      <span>Menu Tower</span>
-      <span class="ticker__dot">●</span>
-      <span>Frites Gaufrettes</span>
-      <span class="ticker__dot">●</span>
-      <span>Bucket Duo</span>
-      <span class="ticker__dot">●</span>
-      <span>Menu Double Trouble</span>
-      <span class="ticker__dot">●</span>
-      <span>Mozza Stick</span>
-      <span class="ticker__dot">●</span>
-      <span>Menu Fermier</span>
-      <span class="ticker__dot">●</span>
-      <span>Tiramisu Spéculoos</span>
-      <span class="ticker__dot">●</span>
+      <span>Menu Blue</span><span class="ticker__dot">●</span>
+      <span>Tenders Croustillants</span><span class="ticker__dot">●</span>
+      <span>Menu Tower</span><span class="ticker__dot">●</span>
+      <span>Frites Gaufrettes</span><span class="ticker__dot">●</span>
+      <span>Bucket Duo</span><span class="ticker__dot">●</span>
+      <span>Menu Double Trouble</span><span class="ticker__dot">●</span>
+      <span>Mozza Stick</span><span class="ticker__dot">●</span>
+      <span>Menu Fermier</span><span class="ticker__dot">●</span>
+      <span>Tiramisu Spéculoos</span><span class="ticker__dot">●</span>
+      <span>Menu Blue</span><span class="ticker__dot">●</span>
+      <span>Tenders Croustillants</span><span class="ticker__dot">●</span>
+      <span>Menu Tower</span><span class="ticker__dot">●</span>
+      <span>Frites Gaufrettes</span><span class="ticker__dot">●</span>
+      <span>Bucket Duo</span><span class="ticker__dot">●</span>
+      <span>Menu Double Trouble</span><span class="ticker__dot">●</span>
+      <span>Mozza Stick</span><span class="ticker__dot">●</span>
+      <span>Menu Fermier</span><span class="ticker__dot">●</span>
+      <span>Tiramisu Spéculoos</span><span class="ticker__dot">●</span>
     </div>
   </div>
 
-  <!-- ========== POURQUOI BLUE ========== -->
-  <section class="why-us section" id="pourquoi-nous">
+  <!-- MENU -->
+  <section class="menu-section" id="menu">
     <div class="container">
-      <div class="section__header">
-        <span class="section__label">Pourquoi Blue. ?</span>
-        <h2 class="section__title">On ne fait pas les<br />choses à moitié.</h2>
-      </div>
-      <div class="why-us__grid">
-        <div class="why-card">
-          <div class="why-card__icon">🔥</div>
-          <h3>Préparé à la commande</h3>
-          <p>Chaque burger, chaque basket — cuisiné au moment de votre commande. Pas de lampe chauffante, pas de compromis.</p>
-        </div>
-        <div class="why-card">
-          <div class="why-card__icon">🍗</div>
-          <h3>Poulet Premium</h3>
-          <p>Tenders panés à la main avec un croustillant qu'on entend à la dégustation. Croquant dehors, fondant dedans — à chaque fois.</p>
-        </div>
-        <div class="why-card">
-          <div class="why-card__icon">🌶️</div>
-          <h3>Sauces Maison</h3>
-          <p>De notre sauce Blue signature au cheddar fondant — nos sauces maison, c'est ce qui vous fait revenir.</p>
-        </div>
-        <div class="why-card">
-          <div class="why-card__icon">⚡</div>
-          <h3>Rapide &amp; Frais</h3>
-          <p>Service rapide sans sacrifier la qualité. Dégusté en quelques minutes, satisfait à chaque fois.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========== MENU ========== -->
-  <section class="menu section section--dark" id="menu">
-    <div class="container">
-      <div class="section__header">
-        <span class="section__label section__label--light">La Carte</span>
+      <div class="section__header reveal">
+        <span class="section__label">La Carte</span>
         <h2 class="section__title section__title--light">Notre Menu</h2>
         <p class="section__sub">Tous les menus incluent frites gaufrettes + boisson au choix.</p>
       </div>
-
       <div class="menu__tabs-wrap">
         <div class="menu__tabs">
           <button class="menu__tab active" data-cat="all">Tous</button>
@@ -153,622 +537,262 @@
           <button class="menu__tab" data-cat="desserts">Desserts</button>
         </div>
       </div>
-
       <div class="menu__grid" id="menuGrid">
 
-        <!-- ── MENUS BURGERS ── -->
+        <!-- MENUS BURGERS -->
         <div class="menu-card" data-cat="menus-burgers">
-          <div class="menu-card__img">
-            <img src="brand_assets/Menu/Menu Classic.jpeg" alt="Menu Classic" />
-            <span class="menu-card__cat">Menu Burger</span>
-          </div>
-          <div class="menu-card__body">
-            <h3>Menu Classic</h3>
-            <p>Steak haché, cheddar, salade, tomate, cornichons, sauce maison + Frites + Boisson</p>
-            <div class="menu-card__footer">
-              <span class="menu-card__price">€13.00</span>
-              <a href="tel:+32484109199" class="btn btn--orange btn--sm">Ajouter</a>
-            </div>
-          </div>
+          <div class="menu-card__img"><img src="brand_assets/Menu/Menu Classic.jpeg" alt="Menu Classic" loading="lazy" /><span class="menu-card__cat">Menu Burger</span></div>
+          <div class="menu-card__body"><h3>Menu Classic</h3><p>Steak haché, cheddar, salade, tomate, cornichons, sauce maison + Frites + Boisson</p><div class="menu-card__footer"><span class="menu-card__price">€13.00</span><a href="tel:+32484109199" class="btn btn--orange btn--sm">Commander</a></div></div>
         </div>
 
         <div class="menu-card" data-cat="menus-burgers">
-          <div class="menu-card__img">
-            <img src="brand_assets/Menu/Menu Fish.jpeg" alt="Menu Fish" />
-            <span class="menu-card__cat">Menu Burger</span>
-          </div>
-          <div class="menu-card__body">
-            <h3>Menu Fish</h3>
-            <p>Filet de poisson pané, sauce tartare, salade, tomate + Frites + Boisson</p>
-            <div class="menu-card__footer">
-              <span class="menu-card__price">€12.00</span>
-              <a href="tel:+32484109199" class="btn btn--orange btn--sm">Ajouter</a>
-            </div>
-          </div>
+          <div class="menu-card__img"><img src="brand_assets/Menu/Menu Fish.jpeg" alt="Menu Fish" loading="lazy" /><span class="menu-card__cat">Menu Burger</span></div>
+          <div class="menu-card__body"><h3>Menu Fish</h3><p>Filet de poisson pané, sauce tartare, salade, tomate + Frites + Boisson</p><div class="menu-card__footer"><span class="menu-card__price">€12.00</span><a href="tel:+32484109199" class="btn btn--orange btn--sm">Commander</a></div></div>
         </div>
 
         <div class="menu-card" data-cat="menus-burgers">
-          <div class="menu-card__img">
-            <img src="brand_assets/Menu/Menu Blue.jpeg" alt="Menu Blue" />
-            <span class="menu-card__cat menu-card__cat--star">⭐ Signature</span>
-          </div>
-          <div class="menu-card__body">
-            <h3>Menu Blue</h3>
-            <p>Double steak haché, cheddar, bacon croustillant, salade, sauce Blue maison + Frites + Boisson</p>
-            <div class="menu-card__footer">
-              <span class="menu-card__price">€14.90</span>
-              <a href="tel:+32484109199" class="btn btn--orange btn--sm">Ajouter</a>
-            </div>
-          </div>
+          <div class="menu-card__img"><img src="brand_assets/Menu/Menu Blue.jpeg" alt="Menu Blue" loading="lazy" /><span class="menu-card__cat menu-card__cat--star">⭐ Signature</span></div>
+          <div class="menu-card__body"><h3>Menu Blue</h3><p>Double steak haché, cheddar, bacon croustillant, salade, sauce Blue maison + Frites + Boisson</p><div class="menu-card__footer"><span class="menu-card__price">€14.90</span><a href="tel:+32484109199" class="btn btn--orange btn--sm">Commander</a></div></div>
         </div>
 
         <div class="menu-card" data-cat="menus-burgers">
-          <div class="menu-card__img">
-            <img src="brand_assets/Menu/Menu Chicken Crunch.jpeg" alt="Menu Chicken Crunch" />
-            <span class="menu-card__cat">Menu Burger</span>
-          </div>
-          <div class="menu-card__body">
-            <h3>Menu Chicken Crunch</h3>
-            <p>Filet de poulet extra croustillant, cheddar fondant, salade croquante, sauce maison + Frites + Boisson</p>
-            <div class="menu-card__footer">
-              <span class="menu-card__price">€14.90</span>
-              <a href="tel:+32484109199" class="btn btn--orange btn--sm">Ajouter</a>
-            </div>
-          </div>
+          <div class="menu-card__img"><img src="brand_assets/Menu/Menu Chicken Crunch.jpeg" alt="Menu Chicken Crunch" loading="lazy" /><span class="menu-card__cat">Menu Burger</span></div>
+          <div class="menu-card__body"><h3>Menu Chicken Crunch</h3><p>Filet de poulet extra croustillant, cheddar fondant, salade croquante, sauce maison + Frites + Boisson</p><div class="menu-card__footer"><span class="menu-card__price">€14.90</span><a href="tel:+32484109199" class="btn btn--orange btn--sm">Commander</a></div></div>
         </div>
 
         <div class="menu-card" data-cat="menus-burgers">
-          <div class="menu-card__img">
-            <img src="brand_assets/Menu/Menu Radical.jpeg" alt="Menu Radical" />
-            <span class="menu-card__cat">Menu Burger</span>
-          </div>
-          <div class="menu-card__body">
-            <h3>Menu Radical</h3>
-            <p>Double steak, double cheddar, sauce piquante maison, cornichons, oignons + Frites + Boisson</p>
-            <div class="menu-card__footer">
-              <span class="menu-card__price">€15.00</span>
-              <a href="tel:+32484109199" class="btn btn--orange btn--sm">Ajouter</a>
-            </div>
-          </div>
+          <div class="menu-card__img"><img src="brand_assets/Menu/Menu Radical.jpeg" alt="Menu Radical" loading="lazy" /><span class="menu-card__cat">Menu Burger</span></div>
+          <div class="menu-card__body"><h3>Menu Radical</h3><p>Double steak, double cheddar, sauce piquante maison, cornichons, oignons + Frites + Boisson</p><div class="menu-card__footer"><span class="menu-card__price">€15.00</span><a href="tel:+32484109199" class="btn btn--orange btn--sm">Commander</a></div></div>
         </div>
 
         <div class="menu-card" data-cat="menus-burgers">
-          <div class="menu-card__img">
-            <img src="brand_assets/Menu/Menu Double Trouble.jpeg" alt="Menu Double Trouble" />
-            <span class="menu-card__cat">Menu Burger</span>
-          </div>
-          <div class="menu-card__body">
-            <h3>Menu Double Trouble</h3>
-            <p>Double steak haché, double cheddar, bacon fumé, salade, tomate + Frites + Boisson</p>
-            <div class="menu-card__footer">
-              <span class="menu-card__price">€15.50</span>
-              <a href="tel:+32484109199" class="btn btn--orange btn--sm">Ajouter</a>
-            </div>
-          </div>
+          <div class="menu-card__img"><img src="brand_assets/Menu/Menu Double Trouble.jpeg" alt="Menu Double Trouble" loading="lazy" /><span class="menu-card__cat">Menu Burger</span></div>
+          <div class="menu-card__body"><h3>Menu Double Trouble</h3><p>Double steak haché, double cheddar, bacon fumé, salade, tomate + Frites + Boisson</p><div class="menu-card__footer"><span class="menu-card__price">€15.50</span><a href="tel:+32484109199" class="btn btn--orange btn--sm">Commander</a></div></div>
         </div>
 
         <div class="menu-card" data-cat="menus-burgers">
-          <div class="menu-card__img">
-            <img src="brand_assets/Menu/Menu Fermier.jpeg" alt="Menu Fermier" />
-            <span class="menu-card__cat">Menu Burger</span>
-          </div>
-          <div class="menu-card__body">
-            <h3>Menu Fermier</h3>
-            <p>Poulet fermier croustillant, bacon fumé, cheddar, salade verte, sauce maison + Frites + Boisson</p>
-            <div class="menu-card__footer">
-              <span class="menu-card__price">€16.50</span>
-              <a href="tel:+32484109199" class="btn btn--orange btn--sm">Ajouter</a>
-            </div>
-          </div>
+          <div class="menu-card__img"><img src="brand_assets/Menu/Menu Fermier.jpeg" alt="Menu Fermier" loading="lazy" /><span class="menu-card__cat">Menu Burger</span></div>
+          <div class="menu-card__body"><h3>Menu Fermier</h3><p>Poulet fermier croustillant, bacon fumé, cheddar, salade verte, sauce maison + Frites + Boisson</p><div class="menu-card__footer"><span class="menu-card__price">€16.50</span><a href="tel:+32484109199" class="btn btn--orange btn--sm">Commander</a></div></div>
         </div>
 
         <div class="menu-card" data-cat="menus-burgers">
-          <div class="menu-card__img">
-            <img src="brand_assets/Menu/Menu Tower.jpeg" alt="Menu Tower" />
-            <span class="menu-card__cat menu-card__cat--star">⭐ Best-seller</span>
-          </div>
-          <div class="menu-card__body">
-            <h3>Menu Tower</h3>
-            <p>Triple steak haché, triple cheddar, bacon, oignons caramélisés, salade + Frites + Boisson</p>
-            <div class="menu-card__footer">
-              <span class="menu-card__price">€16.50</span>
-              <a href="tel:+32484109199" class="btn btn--orange btn--sm">Ajouter</a>
-            </div>
-          </div>
+          <div class="menu-card__img"><img src="brand_assets/Menu/Menu Tower.jpeg" alt="Menu Tower" loading="lazy" /><span class="menu-card__cat menu-card__cat--star">⭐ Best-seller</span></div>
+          <div class="menu-card__body"><h3>Menu Tower</h3><p>Triple steak haché, triple cheddar, bacon, oignons caramélisés, salade + Frites + Boisson</p><div class="menu-card__footer"><span class="menu-card__price">€16.50</span><a href="tel:+32484109199" class="btn btn--orange btn--sm">Commander</a></div></div>
+        </div>
+
+        <!-- MENUS SANDWICHS -->
+        <div class="menu-card" data-cat="menus-sandwichs">
+          <div class="menu-card__img"><img src="brand_assets/Menu/Menu Univers-6T.jpeg" alt="Menu Univers-6T" loading="lazy" /><span class="menu-card__cat">Menu Sandwich</span></div>
+          <div class="menu-card__body"><h3>Menu Univers-6T</h3><p>Sandwich signature avec 6 tenders croustillants maison, sauce au choix + Frites + Boisson</p><div class="menu-card__footer"><span class="menu-card__price">€13.50</span><a href="tel:+32484109199" class="btn btn--orange btn--sm">Commander</a></div></div>
+        </div>
+
+        <div class="menu-card" data-cat="menus-burgers">
+          <div class="menu-card__img"><img src="brand_assets/Menu/Menu Ashoue.jpeg" alt="Menu Ashoue" loading="lazy" /><span class="menu-card__cat">Menu Burger</span></div>
+          <div class="menu-card__body"><h3>Menu Ashoue</h3><p>Pain plat croustillant, viande hachée épicée, cheddar fondu, sauce maison + Frites + Boisson</p><div class="menu-card__footer"><span class="menu-card__price">€13.00</span><a href="tel:+32484109199" class="btn btn--orange btn--sm">Commander</a></div></div>
         </div>
 
         <div class="menu-card" data-cat="menus-sandwichs">
-          <div class="menu-card__img">
-            <img src="brand_assets/Menu/Menu Univers-6T.jpeg" alt="Menu Univers-6T" />
-            <span class="menu-card__cat">Menu Sandwich</span>
-          </div>
-          <div class="menu-card__body">
-            <h3>Menu Univers-6T</h3>
-            <p>Sandwich signature accompagné de 6 tenders croustillants maison, sauce au choix + Frites + Boisson</p>
-            <div class="menu-card__footer">
-              <span class="menu-card__price">€13.50</span>
-              <a href="tel:+32484109199" class="btn btn--orange btn--sm">Ajouter</a>
-            </div>
-          </div>
+          <div class="menu-card__img"><img src="brand_assets/Menu/Menu Escalope.jpeg" alt="Menu Escalope" loading="lazy" /><span class="menu-card__cat">Menu Sandwich</span></div>
+          <div class="menu-card__body"><h3>Menu Escalope</h3><p>Pain plat, escalope de poulet grillée, cheddar fondant, salade, sauce blanche + Frites + Boisson</p><div class="menu-card__footer"><span class="menu-card__price">€13.00</span><a href="tel:+32484109199" class="btn btn--orange btn--sm">Commander</a></div></div>
+        </div>
+
+        <div class="menu-card" data-cat="menus-sandwichs">
+          <div class="menu-card__img"><img src="brand_assets/Menu/Menu Steak.jpeg" alt="Menu Steak" loading="lazy" /><span class="menu-card__cat">Menu Sandwich</span></div>
+          <div class="menu-card__body"><h3>Menu Steak</h3><p>Pain plat, steak haché juteux, cheddar fondant, oignons, sauce maison + Frites + Boisson</p><div class="menu-card__footer"><span class="menu-card__price">€13.00</span><a href="tel:+32484109199" class="btn btn--orange btn--sm">Commander</a></div></div>
+        </div>
+
+        <div class="menu-card" data-cat="menus-sandwichs">
+          <div class="menu-card__img"><img src="brand_assets/Menu/Menu Tandoori.jpeg" alt="Menu Tandoori" loading="lazy" /><span class="menu-card__cat">Menu Sandwich</span></div>
+          <div class="menu-card__body"><h3>Menu Tandoori</h3><p>Pain plat, poulet mariné au tandoori, cheddar fondu, salade, sauce blanche + Frites + Boisson</p><div class="menu-card__footer"><span class="menu-card__price">€13.00</span><a href="tel:+32484109199" class="btn btn--orange btn--sm">Commander</a></div></div>
+        </div>
+
+        <div class="menu-card" data-cat="menus-sandwichs">
+          <div class="menu-card__img"><img src="brand_assets/Menu/Menu Crousty.jpeg" alt="Menu Crousty" loading="lazy" /><span class="menu-card__cat">Menu Sandwich</span></div>
+          <div class="menu-card__body"><h3>Menu Crousty</h3><p>Pain plat croustillant, poulet pané maison, cheddar fondant, sauce blanche onctueuse + Frites + Boisson</p><div class="menu-card__footer"><span class="menu-card__price">€15.00</span><a href="tel:+32484109199" class="btn btn--orange btn--sm">Commander</a></div></div>
+        </div>
+
+        <!-- POULET -->
+        <div class="menu-card" data-cat="poulet">
+          <div class="menu-card__img"><img src="brand_assets/Menu/Menu Poutine.JPEG" alt="Menu Poutine" loading="lazy" /><span class="menu-card__cat menu-card__cat--new">Nouveau</span></div>
+          <div class="menu-card__body"><h3>Menu Poutine</h3><p>Frites gaufrettes, sauce poutine maison, fromage fondant, toppings croustillants + Boisson</p><div class="menu-card__footer"><span class="menu-card__price">€15.00</span><a href="tel:+32484109199" class="btn btn--orange btn--sm">Commander</a></div></div>
         </div>
 
         <div class="menu-card" data-cat="poulet">
-          <div class="menu-card__img">
-            <img src="brand_assets/Menu/Menu Poutine.JPEG" alt="Menu Poutine" />
-            <span class="menu-card__cat menu-card__cat--new">Nouveau</span>
-          </div>
-          <div class="menu-card__body">
-            <h3>Menu Poutine</h3>
-            <p>Frites gaufrettes, sauce poutine maison, fromage fondant, toppings croustillants + Boisson</p>
-            <div class="menu-card__footer">
-              <span class="menu-card__price">€15.00</span>
-              <a href="tel:+32484109199" class="btn btn--orange btn--sm">Ajouter</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- ── MENUS SANDWICHS ── -->
-        <div class="menu-card" data-cat="menus-sandwichs">
-          <div class="menu-card__img">
-            <img src="brand_assets/Menu/Menu Ashoue.jpeg" alt="Menu Ashoue" />
-            <span class="menu-card__cat">Menu Sandwich</span>
-          </div>
-          <div class="menu-card__body">
-            <h3>Menu Ashoue</h3>
-            <p>Pain plat croustillant, viande hachée épicée, cheddar fondu, sauce maison + Frites + Boisson</p>
-            <div class="menu-card__footer">
-              <span class="menu-card__price">€13.00</span>
-              <a href="tel:+32484109199" class="btn btn--orange btn--sm">Ajouter</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="menu-card" data-cat="menus-sandwichs">
-          <div class="menu-card__img">
-            <img src="brand_assets/Menu/Menu Escalope.jpeg" alt="Menu Escalope" />
-            <span class="menu-card__cat">Menu Sandwich</span>
-          </div>
-          <div class="menu-card__body">
-            <h3>Menu Escalope</h3>
-            <p>Pain plat, escalope de poulet grillée, cheddar fondant, salade, sauce blanche + Frites + Boisson</p>
-            <div class="menu-card__footer">
-              <span class="menu-card__price">€13.00</span>
-              <a href="tel:+32484109199" class="btn btn--orange btn--sm">Ajouter</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="menu-card" data-cat="menus-sandwichs">
-          <div class="menu-card__img">
-            <img src="brand_assets/Menu/Menu Steak.jpeg" alt="Menu Steak" />
-            <span class="menu-card__cat">Menu Sandwich</span>
-          </div>
-          <div class="menu-card__body">
-            <h3>Menu Steak</h3>
-            <p>Pain plat, steak haché juteux, cheddar fondant, oignons, sauce maison + Frites + Boisson</p>
-            <div class="menu-card__footer">
-              <span class="menu-card__price">€13.00</span>
-              <a href="tel:+32484109199" class="btn btn--orange btn--sm">Ajouter</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="menu-card" data-cat="menus-sandwichs">
-          <div class="menu-card__img">
-            <img src="brand_assets/Menu/Menu Tandoori.jpeg" alt="Menu Tandoori" />
-            <span class="menu-card__cat">Menu Sandwich</span>
-          </div>
-          <div class="menu-card__body">
-            <h3>Menu Tandoori</h3>
-            <p>Pain plat, poulet mariné au tandoori, cheddar fondu, salade, sauce blanche + Frites + Boisson</p>
-            <div class="menu-card__footer">
-              <span class="menu-card__price">€13.00</span>
-              <a href="tel:+32484109199" class="btn btn--orange btn--sm">Ajouter</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="menu-card" data-cat="menus-sandwichs">
-          <div class="menu-card__img">
-            <img src="brand_assets/Menu/Menu Crousty.jpeg" alt="Menu Crousty" />
-            <span class="menu-card__cat">Menu Sandwich</span>
-          </div>
-          <div class="menu-card__body">
-            <h3>Menu Crousty</h3>
-            <p>Pain plat croustillant, poulet pané maison, cheddar fondant, sauce blanche onctueuse + Frites + Boisson</p>
-            <div class="menu-card__footer">
-              <span class="menu-card__price">€15.00</span>
-              <a href="tel:+32484109199" class="btn btn--orange btn--sm">Ajouter</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- ── POULET ── -->
-        <div class="menu-card" data-cat="poulet">
-          <div class="menu-card__img">
-            <img src="brand_assets/Menu/Tenders.jpeg" alt="Tenders" />
-            <span class="menu-card__cat">Poulet</span>
-          </div>
-          <div class="menu-card__body">
-            <h3>Tenders</h3>
-            <p>Tenders de poulet croustillants, panure épicée maison, sauce au choix</p>
-            <div class="menu-card__footer">
-              <span class="menu-card__price">€8.50</span>
-              <a href="tel:+32484109199" class="btn btn--orange btn--sm">Ajouter</a>
-            </div>
-          </div>
+          <div class="menu-card__img"><img src="brand_assets/Menu/Tenders.jpeg" alt="Tenders" loading="lazy" /><span class="menu-card__cat">Poulet</span></div>
+          <div class="menu-card__body"><h3>Tenders</h3><p>Tenders de poulet croustillants, panure épicée maison, sauce au choix</p><div class="menu-card__footer"><span class="menu-card__price">€8.50</span><a href="tel:+32484109199" class="btn btn--orange btn--sm">Commander</a></div></div>
         </div>
 
         <div class="menu-card" data-cat="poulet">
-          <div class="menu-card__img">
-            <img src="brand_assets/Menu/Wings.jpeg" alt="Wings" />
-            <span class="menu-card__cat">Poulet</span>
-          </div>
-          <div class="menu-card__body">
-            <h3>Wings</h3>
-            <p>Ailes de poulet croustillantes panées maison, relevées à souhait, sauce au choix</p>
-            <div class="menu-card__footer">
-              <span class="menu-card__price">€7.50</span>
-              <a href="tel:+32484109199" class="btn btn--orange btn--sm">Ajouter</a>
-            </div>
-          </div>
+          <div class="menu-card__img"><img src="brand_assets/Menu/Wings.jpeg" alt="Wings" loading="lazy" /><span class="menu-card__cat">Poulet</span></div>
+          <div class="menu-card__body"><h3>Wings</h3><p>Ailes de poulet croustillantes panées maison, relevées à souhait, sauce au choix</p><div class="menu-card__footer"><span class="menu-card__price">€7.50</span><a href="tel:+32484109199" class="btn btn--orange btn--sm">Commander</a></div></div>
         </div>
 
         <div class="menu-card" data-cat="poulet">
-          <div class="menu-card__img">
-            <img src="brand_assets/Menu/Bucket Duo.jpeg" alt="Bucket Duo" />
-            <span class="menu-card__cat menu-card__cat--star">⭐ À Partager</span>
-          </div>
-          <div class="menu-card__body">
-            <h3>Bucket Duo</h3>
-            <p>Grand seau de tenders croustillants Blue. — pour les appétits généreux ou à partager</p>
-            <div class="menu-card__footer">
-              <span class="menu-card__price">€14.90</span>
-              <a href="tel:+32484109199" class="btn btn--orange btn--sm">Ajouter</a>
-            </div>
-          </div>
+          <div class="menu-card__img"><img src="brand_assets/Menu/Bucket Duo.jpeg" alt="Bucket Duo" loading="lazy" /><span class="menu-card__cat menu-card__cat--star">⭐ À Partager</span></div>
+          <div class="menu-card__body"><h3>Bucket Duo</h3><p>Grand seau de tenders croustillants Blue. — pour les appétits généreux ou à partager</p><div class="menu-card__footer"><span class="menu-card__price">€14.90</span><a href="tel:+32484109199" class="btn btn--orange btn--sm">Commander</a></div></div>
         </div>
 
-        <!-- ── ACCOMPAGNEMENTS ── -->
+        <!-- ACCOMPAGNEMENTS -->
         <div class="menu-card" data-cat="accompagnements">
-          <div class="menu-card__img">
-            <img src="brand_assets/Menu/Frites.jpeg" alt="Frites" />
-            <span class="menu-card__cat">Accompagnement</span>
-          </div>
-          <div class="menu-card__body">
-            <h3>Frites Gaufrettes</h3>
-            <p>Frites gaufrettes croustillantes, assaisonnement maison</p>
-            <div class="menu-card__footer">
-              <span class="menu-card__price">€3.50</span>
-              <a href="tel:+32484109199" class="btn btn--orange btn--sm">Ajouter</a>
-            </div>
-          </div>
+          <div class="menu-card__img"><img src="brand_assets/Menu/Frites.jpeg" alt="Frites" loading="lazy" /><span class="menu-card__cat">Accompagnement</span></div>
+          <div class="menu-card__body"><h3>Frites Gaufrettes</h3><p>Frites gaufrettes croustillantes, assaisonnement maison</p><div class="menu-card__footer"><span class="menu-card__price">€3.50</span><a href="tel:+32484109199" class="btn btn--orange btn--sm">Commander</a></div></div>
         </div>
 
         <div class="menu-card" data-cat="accompagnements">
-          <div class="menu-card__img">
-            <img src="brand_assets/Menu/Mozza Stick.jpeg" alt="Mozza Stick" />
-            <span class="menu-card__cat">Accompagnement</span>
-          </div>
-          <div class="menu-card__body">
-            <h3>Mozza Stick</h3>
-            <p>Bâtonnets de mozzarella panés, cœur fondant, sauce tomate maison</p>
-            <div class="menu-card__footer">
-              <span class="menu-card__price">€4.50</span>
-              <a href="tel:+32484109199" class="btn btn--orange btn--sm">Ajouter</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="menu-card" data-cat="boissons">
-          <div class="menu-card__img">
-            <img src="brand_assets/Menu/Poms.jpeg" alt="Poms" />
-            <span class="menu-card__cat">Boisson</span>
-          </div>
-          <div class="menu-card__body">
-            <h3>Poms</h3>
-            <p>Soda pétillant à la pomme — rafraîchissant et fruité, canette 33cl</p>
-            <div class="menu-card__footer">
-              <span class="menu-card__price">€3.50</span>
-              <a href="tel:+32484109199" class="btn btn--orange btn--sm">Ajouter</a>
-            </div>
-          </div>
+          <div class="menu-card__img"><img src="brand_assets/Menu/Mozza Stick.jpeg" alt="Mozza Stick" loading="lazy" /><span class="menu-card__cat">Accompagnement</span></div>
+          <div class="menu-card__body"><h3>Mozza Stick</h3><p>Bâtonnets de mozzarella panés, cœur fondant, sauce tomate maison</p><div class="menu-card__footer"><span class="menu-card__price">€4.50</span><a href="tel:+32484109199" class="btn btn--orange btn--sm">Commander</a></div></div>
         </div>
 
         <div class="menu-card" data-cat="accompagnements">
-          <div class="menu-card__img">
-            <img src="brand_assets/Menu/Sauce Cheddar.jpeg" alt="Sauce Cheddar" />
-            <span class="menu-card__cat">Accompagnement</span>
-          </div>
-          <div class="menu-card__body">
-            <h3>Sauce Cheddar</h3>
-            <p>Sauce cheddar fondante et onctueuse maison — à tremper sans modération</p>
-            <div class="menu-card__footer">
-              <span class="menu-card__price">€3.00</span>
-              <a href="tel:+32484109199" class="btn btn--orange btn--sm">Ajouter</a>
-            </div>
-          </div>
+          <div class="menu-card__img"><img src="brand_assets/Menu/Sauce Cheddar.jpeg" alt="Sauce Cheddar" loading="lazy" /><span class="menu-card__cat">Accompagnement</span></div>
+          <div class="menu-card__body"><h3>Sauce Cheddar</h3><p>Sauce cheddar fondante et onctueuse maison — à tremper sans modération</p><div class="menu-card__footer"><span class="menu-card__price">€3.00</span><a href="tel:+32484109199" class="btn btn--orange btn--sm">Commander</a></div></div>
         </div>
 
-        <!-- ── BOISSONS ── -->
+        <!-- BOISSONS -->
         <div class="menu-card" data-cat="boissons">
-          <div class="menu-card__img">
-            <img src="brand_assets/Menu/Coca Cola.jpeg" alt="Coca-Cola" />
-            <span class="menu-card__cat">Boisson</span>
-          </div>
-          <div class="menu-card__body">
-            <h3>Coca-Cola</h3>
-            <p>Canette 33cl — fraîche et rafraîchissante</p>
-            <div class="menu-card__footer">
-              <span class="menu-card__price">€2.50</span>
-              <a href="tel:+32484109199" class="btn btn--orange btn--sm">Ajouter</a>
-            </div>
-          </div>
+          <div class="menu-card__img"><img src="brand_assets/Menu/Coca Cola.jpeg" alt="Coca-Cola" loading="lazy" /><span class="menu-card__cat">Boisson</span></div>
+          <div class="menu-card__body"><h3>Coca-Cola</h3><p>Canette 33cl — fraîche et rafraîchissante</p><div class="menu-card__footer"><span class="menu-card__price">€2.50</span><a href="tel:+32484109199" class="btn btn--orange btn--sm">Commander</a></div></div>
         </div>
 
         <div class="menu-card" data-cat="boissons">
-          <div class="menu-card__img">
-            <img src="brand_assets/Menu/Coca Cola Zéro.jpeg" alt="Coca-Cola Zéro" />
-            <span class="menu-card__cat">Boisson</span>
-          </div>
-          <div class="menu-card__body">
-            <h3>Coca-Cola Zéro</h3>
-            <p>Canette 33cl — même goût, sans sucre</p>
-            <div class="menu-card__footer">
-              <span class="menu-card__price">€2.50</span>
-              <a href="tel:+32484109199" class="btn btn--orange btn--sm">Ajouter</a>
-            </div>
-          </div>
+          <div class="menu-card__img"><img src="brand_assets/Menu/Coca Cola Zéro.jpeg" alt="Coca-Cola Zéro" loading="lazy" /><span class="menu-card__cat">Boisson</span></div>
+          <div class="menu-card__body"><h3>Coca-Cola Zéro</h3><p>Canette 33cl — même goût, sans sucre</p><div class="menu-card__footer"><span class="menu-card__price">€2.50</span><a href="tel:+32484109199" class="btn btn--orange btn--sm">Commander</a></div></div>
         </div>
 
         <div class="menu-card" data-cat="boissons">
-          <div class="menu-card__img">
-            <img src="brand_assets/Menu/Fanta Orange.jpeg" alt="Fanta Orange" />
-            <span class="menu-card__cat">Boisson</span>
-          </div>
-          <div class="menu-card__body">
-            <h3>Fanta Orange</h3>
-            <p>Canette 33cl — pétillant et fruité</p>
-            <div class="menu-card__footer">
-              <span class="menu-card__price">€2.50</span>
-              <a href="tel:+32484109199" class="btn btn--orange btn--sm">Ajouter</a>
-            </div>
-          </div>
+          <div class="menu-card__img"><img src="brand_assets/Menu/Fanta Orange.jpeg" alt="Fanta Orange" loading="lazy" /><span class="menu-card__cat">Boisson</span></div>
+          <div class="menu-card__body"><h3>Fanta Orange</h3><p>Canette 33cl — pétillant et fruité</p><div class="menu-card__footer"><span class="menu-card__price">€2.50</span><a href="tel:+32484109199" class="btn btn--orange btn--sm">Commander</a></div></div>
         </div>
 
         <div class="menu-card" data-cat="boissons">
-          <div class="menu-card__img">
-            <img src="brand_assets/Menu/Fanta Exotic.jpeg" alt="Fanta Exotic" />
-            <span class="menu-card__cat">Boisson</span>
-          </div>
-          <div class="menu-card__body">
-            <h3>Fanta Exotic</h3>
-            <p>Canette 33cl — saveur exotique ensoleillée</p>
-            <div class="menu-card__footer">
-              <span class="menu-card__price">€2.50</span>
-              <a href="tel:+32484109199" class="btn btn--orange btn--sm">Ajouter</a>
-            </div>
-          </div>
+          <div class="menu-card__img"><img src="brand_assets/Menu/Fanta Exotic.jpeg" alt="Fanta Exotic" loading="lazy" /><span class="menu-card__cat">Boisson</span></div>
+          <div class="menu-card__body"><h3>Fanta Exotic</h3><p>Canette 33cl — saveur exotique ensoleillée</p><div class="menu-card__footer"><span class="menu-card__price">€2.50</span><a href="tel:+32484109199" class="btn btn--orange btn--sm">Commander</a></div></div>
         </div>
 
         <div class="menu-card" data-cat="boissons">
-          <div class="menu-card__img">
-            <img src="brand_assets/Menu/Oasis Tropical.jpeg" alt="Oasis Tropical" />
-            <span class="menu-card__cat">Boisson</span>
-          </div>
-          <div class="menu-card__body">
-            <h3>Oasis Tropical</h3>
-            <p>Canette 33cl — fruits tropicaux, saveur intense</p>
-            <div class="menu-card__footer">
-              <span class="menu-card__price">€2.50</span>
-              <a href="tel:+32484109199" class="btn btn--orange btn--sm">Ajouter</a>
-            </div>
-          </div>
+          <div class="menu-card__img"><img src="brand_assets/Menu/Oasis Tropical.jpeg" alt="Oasis Tropical" loading="lazy" /><span class="menu-card__cat">Boisson</span></div>
+          <div class="menu-card__body"><h3>Oasis Tropical</h3><p>Canette 33cl — fruits tropicaux, saveur intense</p><div class="menu-card__footer"><span class="menu-card__price">€2.50</span><a href="tel:+32484109199" class="btn btn--orange btn--sm">Commander</a></div></div>
         </div>
 
         <div class="menu-card" data-cat="boissons">
-          <div class="menu-card__img">
-            <img src="brand_assets/Menu/Oasis Fraise Framboise.jpeg" alt="Oasis Fraise Framboise" />
-            <span class="menu-card__cat">Boisson</span>
-          </div>
-          <div class="menu-card__body">
-            <h3>Oasis Fraise Framboise</h3>
-            <p>Canette 33cl — fraise et framboise, fraîcheur garantie</p>
-            <div class="menu-card__footer">
-              <span class="menu-card__price">€2.50</span>
-              <a href="tel:+32484109199" class="btn btn--orange btn--sm">Ajouter</a>
-            </div>
-          </div>
+          <div class="menu-card__img"><img src="brand_assets/Menu/Oasis Fraise Framboise.jpeg" alt="Oasis Fraise Framboise" loading="lazy" /><span class="menu-card__cat">Boisson</span></div>
+          <div class="menu-card__body"><h3>Oasis Fraise Framboise</h3><p>Canette 33cl — fraise et framboise, fraîcheur garantie</p><div class="menu-card__footer"><span class="menu-card__price">€2.50</span><a href="tel:+32484109199" class="btn btn--orange btn--sm">Commander</a></div></div>
         </div>
 
         <div class="menu-card" data-cat="boissons">
-          <div class="menu-card__img">
-            <img src="brand_assets/Menu/Schweppes Agrumes.jpeg" alt="Schweppes Agrumes" />
-            <span class="menu-card__cat">Boisson</span>
-          </div>
-          <div class="menu-card__body">
-            <h3>Schweppes Agrumes</h3>
-            <p>Canette 33cl — tonic aux agrumes, pétillant et désaltérant</p>
-            <div class="menu-card__footer">
-              <span class="menu-card__price">€2.50</span>
-              <a href="tel:+32484109199" class="btn btn--orange btn--sm">Ajouter</a>
-            </div>
-          </div>
+          <div class="menu-card__img"><img src="brand_assets/Menu/Schweppes Agrumes.jpeg" alt="Schweppes Agrumes" loading="lazy" /><span class="menu-card__cat">Boisson</span></div>
+          <div class="menu-card__body"><h3>Schweppes Agrumes</h3><p>Canette 33cl — tonic aux agrumes, pétillant et désaltérant</p><div class="menu-card__footer"><span class="menu-card__price">€2.50</span><a href="tel:+32484109199" class="btn btn--orange btn--sm">Commander</a></div></div>
         </div>
 
-        <!-- ── DESSERTS ── -->
+        <div class="menu-card" data-cat="boissons">
+          <div class="menu-card__img"><img src="brand_assets/Menu/Poms.jpeg" alt="Poms" loading="lazy" /><span class="menu-card__cat">Boisson</span></div>
+          <div class="menu-card__body"><h3>Poms</h3><p>Soda pétillant à la pomme — rafraîchissant et fruité, canette 33cl</p><div class="menu-card__footer"><span class="menu-card__price">€3.50</span><a href="tel:+32484109199" class="btn btn--orange btn--sm">Commander</a></div></div>
+        </div>
+
+        <!-- DESSERTS -->
         <div class="menu-card" data-cat="desserts">
-          <div class="menu-card__img">
-            <img src="brand_assets/Menu/Tarte Au Daim.jpeg" alt="Tarte Au Daim" />
-            <span class="menu-card__cat">Dessert</span>
-          </div>
-          <div class="menu-card__body">
-            <h3>Tarte Au Daim</h3>
-            <p>Tarte sablée au Daim, chocolat au lait, pralinoise croquante</p>
-            <div class="menu-card__footer">
-              <span class="menu-card__price">€4.50</span>
-              <a href="tel:+32484109199" class="btn btn--orange btn--sm">Ajouter</a>
-            </div>
-          </div>
+          <div class="menu-card__img"><img src="brand_assets/Menu/Tarte Au Daim.jpeg" alt="Tarte Au Daim" loading="lazy" /><span class="menu-card__cat">Dessert</span></div>
+          <div class="menu-card__body"><h3>Tarte Au Daim</h3><p>Tarte sablée au Daim, chocolat au lait, pralinoise croquante</p><div class="menu-card__footer"><span class="menu-card__price">€4.50</span><a href="tel:+32484109199" class="btn btn--orange btn--sm">Commander</a></div></div>
         </div>
 
         <div class="menu-card" data-cat="desserts">
-          <div class="menu-card__img">
-            <img src="brand_assets/Menu/Tiramisu Speculoos.jpeg" alt="Tiramisu Spéculoos" />
-            <span class="menu-card__cat">Dessert</span>
-          </div>
-          <div class="menu-card__body">
-            <h3>Tiramisu Spéculoos</h3>
-            <p>Tiramisu onctueux aux biscuits Spéculoos, crème mascarpone légère</p>
-            <div class="menu-card__footer">
-              <span class="menu-card__price">€4.50</span>
-              <a href="tel:+32484109199" class="btn btn--orange btn--sm">Ajouter</a>
-            </div>
-          </div>
+          <div class="menu-card__img"><img src="brand_assets/Menu/Tiramisu Speculoos.jpeg" alt="Tiramisu Spéculoos" loading="lazy" /><span class="menu-card__cat">Dessert</span></div>
+          <div class="menu-card__body"><h3>Tiramisu Spéculoos</h3><p>Tiramisu onctueux aux biscuits Spéculoos, crème mascarpone légère</p><div class="menu-card__footer"><span class="menu-card__price">€4.50</span><a href="tel:+32484109199" class="btn btn--orange btn--sm">Commander</a></div></div>
         </div>
 
-      </div><!-- /menu__grid -->
+      </div>
     </div>
   </section>
 
-  <!-- ========== AVIS CLIENTS ========== -->
-  <section class="reviews section section--blue" id="avis">
+  <!-- REVIEWS -->
+  <section class="reviews-section" id="avis">
     <div class="container">
-      <div class="section__header">
-        <span class="section__label section__label--light">Avis Google</span>
+      <div class="section__header reveal">
+        <span class="section__label">Avis Google</span>
         <h2 class="section__title section__title--light">Ce que disent nos clients</h2>
       </div>
       <div class="reviews__grid">
-
-        <div class="review-card">
+        <div class="review-card reveal reveal--d1">
           <div class="review-card__stars">★★★★★</div>
           <p>"Je vous conseille vraiment ce fast-food, j'ai été accueilli et servi comme un roi du début à la fin. Très aimable et souriant le jeune homme à la caisse comme en cuisine. J'y retournerais sans hésité. 😋😋👍🏼"</p>
-          <div class="review-card__author">
-            <div class="review-card__avatar">H</div>
-            <div>
-              <strong>Houssein Benamar</strong>
-              <span>Google</span>
-            </div>
-          </div>
+          <div class="review-card__author"><div class="review-card__avatar">H</div><div><strong>Houssein Benamar</strong><span>Google</span></div></div>
         </div>
-
-        <div class="review-card">
+        <div class="review-card reveal reveal--d2">
           <div class="review-card__stars">★★★★★</div>
           <p>"Les frr je conseille de fouuu c'est le meilleur fast food que j'ai mangé. En terme de quantité y'a rien à dire c'est vrmt fort."</p>
-          <div class="review-card__author">
-            <div class="review-card__avatar">A</div>
-            <div>
-              <strong>Amine alitame</strong>
-              <span>Google</span>
-            </div>
-          </div>
+          <div class="review-card__author"><div class="review-card__avatar">A</div><div><strong>Amine alitame</strong><span>Google</span></div></div>
         </div>
-
-        <div class="review-card">
+        <div class="review-card reveal reveal--d3">
           <div class="review-card__stars">★★★★★</div>
-          <p>"Rien à redire, tout est au top. Un endroit discret à la façade épurée, mais qui surprend avec des sandwichs tandoori (et autres) absolument délicieux… à découvrir sans hésiter !"</p>
-          <div class="review-card__author">
-            <div class="review-card__avatar">R</div>
-            <div>
-              <strong>Rc Shak</strong>
-              <span>Google</span>
-            </div>
-          </div>
+          <p>"Rien à redire, tout est au top. Un endroit discret à la façade épurée, mais qui surprend avec des sandwichs tandoori absolument délicieux… à découvrir sans hésiter !"</p>
+          <div class="review-card__author"><div class="review-card__avatar">R</div><div><strong>Rc Shak</strong><span>Google</span></div></div>
         </div>
-
       </div>
-
-      <div class="reviews__stats">
-        <div class="stat">
-          <span class="stat__num">4.9</span>
-          <span class="stat__label">Note Google</span>
-        </div>
+      <div class="reviews__stats reveal">
+        <div class="stat"><span class="stat__num">4.9</span><span class="stat__label">Note Google</span></div>
         <div class="stat__divider"></div>
-        <div class="stat">
-          <span class="stat__num">500+</span>
-          <span class="stat__label">Avis clients</span>
-        </div>
+        <div class="stat"><span class="stat__num">500+</span><span class="stat__label">Avis clients</span></div>
         <div class="stat__divider"></div>
-        <div class="stat">
-          <span class="stat__num">Halal</span>
-          <span class="stat__label">Certifié</span>
-        </div>
+        <div class="stat"><span class="stat__num">Halal</span><span class="stat__label">Certifié</span></div>
       </div>
     </div>
   </section>
 
-  <!-- ========== ADRESSE ========== -->
-  <section class="locations section" id="adresse">
+  <!-- ADRESSE -->
+  <section class="location-section" id="adresse">
     <div class="container">
       <div class="section__header">
         <span class="section__label">Nous Trouver</span>
-        <h2 class="section__title">Notre Adresse</h2>
+        <h2 class="section__title section__title--dark">Notre Adresse</h2>
       </div>
       <div class="location-single">
         <div class="location-main">
           <div class="location-main__info">
             <div class="location-icon">📍</div>
             <div>
-              <h3>Blue. Molenbeek</h3>
+              <h3>Blue.</h3>
               <p class="location-address">Bd du Jubilé 44<br />1080 Molenbeek-Saint-Jean<br />Bruxelles, Belgique</p>
             </div>
           </div>
-          <div class="location-main__details">
-            <div class="location-detail">
-              <span class="location-detail__label">🕐 Horaires</span>
-              <div class="location-hours">
-                <div class="hours-row">
-                  <span>Lundi – Dimanche</span>
-                  <span class="hours-time">17h00 – 02h00</span>
-                </div>
-                <div class="hours-badge">Ouvert 7j/7</div>
-              </div>
-            </div>
-            <div class="location-detail">
-              <span class="location-detail__label">📞 Téléphone</span>
-              <a href="tel:+32484109199" class="location-phone">0484 10 91 99</a>
+          <div>
+            <span class="location-detail__label">🕐 Horaires</span>
+            <div class="location-hours">
+              <div class="hours-row"><span>Lundi – Dimanche</span><span class="hours-time">17h00 – 02h00</span></div>
+              <div class="hours-badge">Ouvert 7j/7</div>
             </div>
           </div>
+          <div>
+            <span class="location-detail__label">📞 Téléphone</span>
+            <a href="tel:+32484109199" class="location-phone">0484 10 91 99</a>
+          </div>
           <div class="location-main__actions">
-            <a href="https://maps.google.com/?q=Bd+du+Jubil%C3%A9+44,+1080+Molenbeek-Saint-Jean,+Bruxelles,+Belgique" target="_blank" class="btn btn--orange btn--lg">Itinéraire Google Maps</a>
-            <a href="tel:+32484109199" class="btn btn--outline-dark btn--lg">Appeler</a>
+            <a href="https://maps.google.com/?q=Bd+du+Jubilé+44,+1080+Molenbeek-Saint-Jean" target="_blank" class="btn btn--orange btn--lg">Itinéraire</a>
+            <a href="tel:+32484109199" class="btn btn--outline btn--lg">Appeler</a>
           </div>
         </div>
         <div class="location-map">
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2519.872038576088!2d4.328100!3d50.859800!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c3c484ca48e0b7%3A0x5bce0c4ba72b5769!2sBd%20du%20Jubil%C3%A9%2044%2C%201080%20Molenbeek-Saint-Jean%2C%20Belgique!5e0!3m2!1sfr!2sbe!4v1714000000000"
-            width="100%"
-            height="100%"
-            style="border:0;"
-            allowfullscreen=""
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"
-            title="Blue. Molenbeek sur Google Maps">
-          </iframe>
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2519.872038576088!2d4.328100!3d50.859800!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c3c484ca48e0b7%3A0x5bce0c4ba72b5769!2sBd%20du%20Jubil%C3%A9%2044%2C%201080%20Molenbeek-Saint-Jean%2C%20Belgique!5e0!3m2!1sfr!2sbe!4v1714000000000" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Blue. Molenbeek"></iframe>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ========== COMMANDER CTA ========== -->
+  <!-- ORDER CTA -->
   <section class="order-cta" id="commander">
-    <div class="order-cta__bg"></div>
     <div class="container order-cta__content">
-      <h2>Prêt à Commander ?</h2>
-      <p>Sur place ou à emporter — appelez-nous et votre commande sera prête.</p>
-      <div class="order-cta__btns">
+      <h2 class="reveal">Prêt à Commander ?</h2>
+      <p class="reveal">Sur place ou à emporter — appelez-nous et votre commande sera prête.</p>
+      <div class="order-cta__btns reveal">
         <a href="tel:+32484109199" class="btn btn--orange btn--lg">📞 0484 10 91 99</a>
       </div>
-      <div class="order-cta__apps">
+      <div class="order-cta__apps reveal">
         <span>Aussi disponible sur</span>
-        <div class="order-cta__badges">
-          <span class="app-badge">Uber Eats</span>
-        </div>
+        <div><span class="app-badge">Uber Eats</span></div>
       </div>
     </div>
   </section>
 
-  <!-- ========== FOOTER ========== -->
+  <!-- FOOTER -->
   <footer class="footer">
     <div class="container">
       <div class="footer__top">
@@ -826,6 +850,36 @@
     </div>
   </footer>
 
-  <script src="script.js"></script>
+  <script>
+    // Nav scroll effect
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+
+    // Mobile nav toggle
+    const burger = document.getElementById('navBurger');
+    const mobile = document.getElementById('navMobile');
+    burger.addEventListener('click', () => mobile.classList.toggle('open'));
+    mobile.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobile.classList.remove('open')));
+
+    // Menu tabs filter
+    const tabs  = document.querySelectorAll('.menu__tab');
+    const cards = document.querySelectorAll('.menu-card');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        const cat = tab.dataset.cat;
+        cards.forEach(card => card.classList.toggle('hidden', cat !== 'all' && card.dataset.cat !== cat));
+      });
+    });
+
+    // Scroll reveal
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
 </body>
 </html>
